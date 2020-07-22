@@ -64,6 +64,22 @@ void debugUpdate() {
       Serial.print('\t');
     }
     Serial.println();
+
+
+//oscillator freqs
+    for (int i = 0; i < TONESAMOUNT; i++) {
+      Serial.print(freq[i]);
+      Serial.print('\t');
+    }
+    Serial.println();
+
+    //oscillator desired freqs
+    for (int i = 0; i < TONESAMOUNT; i++) {
+      Serial.print(toneSet[buttonState[0]][i]);
+      Serial.print('\t');
+    }
+    Serial.println();
+    
     Serial.print("RMS = ");
     Serial.print(rms1.read());
     Serial.print('\t');
