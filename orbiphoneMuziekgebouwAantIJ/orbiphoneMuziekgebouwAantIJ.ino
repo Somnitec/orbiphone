@@ -1,4 +1,4 @@
-#define TONESAMOUNT 6 // amount of pads active
+#define TONESAMOUNT 7 // amount of pads active
 float sineMaxAmplitude = 1.0/TONESAMOUNT + .03; //about one divided by the amount of tones available (.11 is the safest value)
 
 #define debugUpdateTime 250//in ms
@@ -18,6 +18,7 @@ float sineMaxAmplitude = 1.0/TONESAMOUNT + .03; //about one divided by the amoun
 #define autoCalibSoundRange 0.02 //how much the volume should stay the same for recalibration
 #define calibCycles 50 // it will average this amount of cycles when calibrating
 
+#define midiUpdateTime 5//in ms
 
 void setup() {
   initializingStuff();
@@ -30,5 +31,8 @@ void loop() {
   audioUpdate();
   ledUpdate();
   debugUpdate();
+  midiUpdate();
+
+  
   
 }
