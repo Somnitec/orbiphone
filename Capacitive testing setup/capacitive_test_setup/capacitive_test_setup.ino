@@ -1,3 +1,5 @@
+#define debugUpdateTime 20//in ms
+#define calibrationUpdateTime 5//in ms
 #define NUM_PADS 12
 
 #include <FastLED.h>
@@ -6,12 +8,6 @@ CRGB leds[NUM_PADS];
 
 #include <Wire.h>
 #include "Adafruit_MPR121.h"
-
-#ifndef _BV
-#define _BV(bit) (1 << (bit))
-#endif
-
-#define AUTOCONFIG
 
 Adafruit_MPR121 cap = Adafruit_MPR121();
 
@@ -30,19 +26,27 @@ void setup() {
 }
 
 void loop() {
- 
+  calibrationUpdate();
+
+  debugUpdate();
+
+
+
+}
+
+elapsedMillis debugUpdateTimer;
+void debugUpdate() {
+  if (debugUpdateTimer > debugUpdateTime) {
+    debugUpdateTimer = 0;
     Serial.print("raw data: ");
     for (uint8_t i = 0; i < 12; i++) {
       int data = cap.filteredData(i);
       //data = max( map(data,0,cap.baselineData(i),255,0)-3,0);
       Serial.print(data); Serial.print("\t");
-      leds[i] = CHSV(data+192, 255, data);
+      leds[i] = CHSV(data + 192, 255, data);
     }
     Serial.print(touchRead(0));
     Serial.println();
-
-    
     FastLED.show();
-    delay(10);
-    
   }
+}
