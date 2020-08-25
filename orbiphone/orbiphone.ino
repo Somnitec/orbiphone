@@ -1,3 +1,45 @@
+//PINS
+//0 t  touchpad 0
+//1 t  touchpad 1
+//2    IRQ (interrupt from motion sensors)
+//3     LED0
+//4     LED1
+//5   AMP_EN  set High to enable amplifier
+//6   MEM_CS  memory  (pull Low to access memory)
+//7   LED_EN  set High to send LED data
+//8     LED2
+//9     LED3
+//10    LED4
+//11   MOSI memory,led  SPI Data
+//12   MISO memory  SPI Data
+//13   SCK  memory,led  SPI Clock
+//14    LED5
+//15 t touchpad 2
+//16 t touchpad 3
+//17 t touchpad 4
+//18 t SDA - I2C Data for motion sensors
+//19 t SCL - I2C Clock for motion sensors
+//20    LED6
+//21   ??touchpad 10
+//22 t touchpad 5
+//23 t touchpad 6
+//24    LED7
+//25 t touchpad 7
+//26    LED8
+//27    LED9
+//28    LED10
+//29 ??enc0??
+//30 ??enc1??
+//31 ??but0??
+//32 t touchpad 8
+//33 t touchpad 9
+//A10 (34)  
+//A11 (35)
+//A12 (36) ??? volume???
+//A13 (37)
+//(38) internal temp sensor
+
+
 #define TONESAMOUNT 7 // amount of pads active
 float sineMaxAmplitude = 1.0/TONESAMOUNT + .03; //about one divided by the amount of tones available (.11 is the safest value)
 
