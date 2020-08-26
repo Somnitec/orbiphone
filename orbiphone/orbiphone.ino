@@ -1,36 +1,43 @@
+//WIRES 
+//gnd   BLACK  BLUE
+//vcc   RED    ORANGE
+//touch GREEN  BROWN
+//led   PURPLE YELLOW
+
 //PINS
 //0 t  touchpad 0
 //1 t  touchpad 1
 //2    IRQ (interrupt from motion sensors)
-//3     LED0
-//4     LED1
+//3     LED1
+//4     LED0
 //5   AMP_EN  set High to enable amplifier
 //6   MEM_CS  memory  (pull Low to access memory)
-//7   LED_EN  set High to send LED data
-//8     LED2
+//7    audio jack connected    ((disconnected //LED_EN  set High to send LED data//))
+//8     LED4
 //9     LED3
-//10    LED4
+//10    LED2
 //11   MOSI memory,led  SPI Data
 //12   MISO memory  SPI Data
 //13   SCK  memory,led  SPI Clock
-//14    LED5
-//15 t touchpad 2
-//16 t touchpad 3
+//14    enc but0
+//15 t touchpad 3
+//16 t touchpad 2
 //17 t touchpad 4
-//18 t SDA - I2C Data for motion sensors
-//19 t SCL - I2C Clock for motion sensors
+//18 t SDA0   LED10
+//19 t SCL0   touchpad 10
 //20    LED6
-//21   ??touchpad 10
+//21    LED5
 //22 t touchpad 5
 //23 t touchpad 6
+// ---backside
 //24    LED7
 //25 t touchpad 7
-//26    LED8
-//27    LED9
-//28    LED10
-//29 ??enc0??
-//30 ??enc1??
-//31 ??but0??
+//26   LED9 
+//27    enc1
+//28    enc0
+//29   SCL1  - I2C Clock for motion sensors   (IMPORT wire1.h!)
+//30   SDA1  - I2C Data for motion sensors    (IMPORT wire1.h!)
+//31   LED8
 //32 t touchpad 8
 //33 t touchpad 9
 //A10 (34)  
