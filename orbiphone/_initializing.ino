@@ -11,7 +11,7 @@
 #define LEDPIN6          20
 #define LEDPIN7          24
 #define LEDPIN8          31
-#define LEDPIN9          24
+#define LEDPIN9          26
 #define LEDPIN10         18
 
 #define BRIGHTNESS  255
