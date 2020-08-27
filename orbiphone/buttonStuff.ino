@@ -3,25 +3,25 @@ elapsedMillis buttonUpdateTimer;
 void buttonUpdate() {
   if (buttonUpdateTimer > buttonUpdateTime) {
     buttonUpdateTimer = 0;
-
-    button1.update();
-    button2.update();
-    button3.update();
-    if (button1.fell()) {
-      buttonState[1] = !buttonState[1];
-      usbMIDI.sendControlChange(7, buttonState[1] * 127, 0);
-      buttonStateChanged();
-    }
-    if (button2.fell()) {
-      buttonState[2] = !buttonState[2];
-      usbMIDI.sendControlChange(8, buttonState[2] * 127, 0);
-      buttonStateChanged();
-    }
-    if (button3.fell()) {
-      buttonState[3] = !buttonState[3];
-      usbMIDI.sendControlChange(9, buttonState[3] * 127, 0);
-      buttonStateChanged();
-    }
+//
+//    button1.update();
+//    button2.update();
+//    button3.update();
+//    if (button1.fell()) {
+//      buttonState[1] = !buttonState[1];
+//      usbMIDI.sendControlChange(7, buttonState[1] * 127, 0);
+//      buttonStateChanged();
+//    }
+//    if (button2.fell()) {
+//      buttonState[2] = !buttonState[2];
+//      usbMIDI.sendControlChange(8, buttonState[2] * 127, 0);
+//      buttonStateChanged();
+//    }
+//    if (button3.fell()) {
+//      buttonState[3] = !buttonState[3];
+//      usbMIDI.sendControlChange(9, buttonState[3] * 127, 0);
+//      buttonStateChanged();
+//    }
 
 
 

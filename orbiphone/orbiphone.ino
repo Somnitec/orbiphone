@@ -47,7 +47,7 @@
 //(38) internal temp sensor
 
 
-#define TONESAMOUNT 7 // amount of pads active
+#define TONESAMOUNT 11 // amount of pads active
 float sineMaxAmplitude = 1.0/TONESAMOUNT + .03; //about one divided by the amount of tones available (.11 is the safest value)
 
 #define debugUpdateTime 250//in ms

@@ -2,14 +2,22 @@
 #include <FastLED.h>
 #include <Bounce2.h>
 
+#define LEDPIN0          4
 #define LEDPIN1          3
-#define LEDPIN2          4
-#define LEDPIN3          5
-#define NUM_LEDS    1
+#define LEDPIN2          10
+#define LEDPIN3          9
+#define LEDPIN4          8
+#define LEDPIN5          21
+#define LEDPIN6          20
+#define LEDPIN7          24
+#define LEDPIN8          31
+#define LEDPIN9          24
+#define LEDPIN10         18
+
 #define BRIGHTNESS  255
-#define LED_TYPE    WS2811
+#define LED_TYPE    WS2812B
 #define COLOR_ORDER GRB
-CRGB leds[3][NUM_LEDS];
+CRGB leds[TONESAMOUNT];
 
 // GUItool: begin automatically generated code
 AudioSynthWaveformSineHires sine1;   //xy=301,889
@@ -52,30 +60,29 @@ AudioConnection          patchCord17(mixer4, rms1);
 //AudioConnection          patchCord19(mixer4,0, usb1,1);
 // GUItool: end automatically generated code
 
-#define BUTTON1PIN            10
-#define BUTTON2PIN            11
-#define BUTTON3PIN            12
+const int encPins[] = {28, 27, 14};
+const int audioSwitchPin = 7;
+const int volumePin = 36;
 #define DEBOUNCEINTERVAL       5//ms
 
-Bounce button1 = Bounce();
-Bounce button2 = Bounce();
-Bounce button3 = Bounce();
+Bounce audioSwitch = Bounce();
+Bounce encButton = Bounce();
 
 
 int valueArray[11][6] = {//pin, lowcal,highcal,average,range,frequency
-  {15, 600, 700, 0, 0, 0},
-  {16, 600, 700, 0, 0, 0},
-  {17, 600, 700, 0, 0, 0},
-  {18, 600, 700, 0, 0, 0},
-  {19, 600, 700, 0, 0, 0},
-  {22, 600, 700, 0, 0, 0},
-  {23, 600, 700, 0, 0, 0},
   {0, 600, 700, 0, 0, 0},
   {1, 600, 700, 0, 0, 0},
+  {16, 600, 700, 0, 0, 0},
+  {15, 600, 700, 0, 0, 0},
+  {17, 600, 700, 0, 0, 0},
+  {22, 600, 700, 0, 0, 0},
+  {23, 600, 700, 0, 0, 0},
   {25, 600, 700, 0, 0, 0},
-  {32, 600, 700, 0, 0, 0}
+  {32, 600, 700, 0, 0, 0},
+  {33, 600, 700, 0, 0, 0},
+  {19, 600, 700, 0, 0, 0}
 };
-int sensor[11] = {15, 16, 17, 18, 19, 22, 23, 0, 1, 25, 32};
+int sensor[11] = {0, 1, 16, 15, 17, 22, 23, 25, 32, 33, 19};
 int readings[11][numReadings];
 int lowCal[11];
 int highCal[11];
@@ -93,28 +100,33 @@ void initializingStuff() {
   Serial.begin(115200);
 
   AudioMemory(12);//increase if the are glitches
-  dac1.analogReference(INTERNAL);//EXTERNAL is louder, but actually too loud
+  dac1.analogReference(EXTERNAL);//EXTERNAL is louder, but actually too loud
 
-  FastLED.addLeds<LED_TYPE, LEDPIN1, COLOR_ORDER>(leds[0], NUM_LEDS);
-  FastLED.addLeds<LED_TYPE, LEDPIN2, COLOR_ORDER>(leds[1], NUM_LEDS);
-  FastLED.addLeds<LED_TYPE, LEDPIN3, COLOR_ORDER>(leds[2], NUM_LEDS);
+  FastLED.addLeds<LED_TYPE, LEDPIN0, COLOR_ORDER>(leds, 0, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN1, COLOR_ORDER>(leds, 1, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN2, COLOR_ORDER>(leds, 2, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN3, COLOR_ORDER>(leds, 3, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN4, COLOR_ORDER>(leds, 4, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN5, COLOR_ORDER>(leds, 5, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN6, COLOR_ORDER>(leds, 6, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN7, COLOR_ORDER>(leds, 7, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN8, COLOR_ORDER>(leds, 8, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN9, COLOR_ORDER>(leds, 9, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN10, COLOR_ORDER>(leds, 10, 1);
   FastLED.setBrightness(  BRIGHTNESS );
 
-  pinMode(13, OUTPUT);
-  digitalWrite(13, HIGH);
+  //pinMode(13, OUTPUT); // turn of the led as this might interfer with SPI
+  //digitalWrite(13, HIGH);
 
   baselineCalibration();
 
   //set up push buttons
-  pinMode(BUTTON1PIN, INPUT_PULLUP);
-  button1.attach(BUTTON1PIN);
-  button1.interval(DEBOUNCEINTERVAL);
-  pinMode(BUTTON2PIN, INPUT_PULLUP);
-  button2.attach(BUTTON2PIN);
-  button2.interval(DEBOUNCEINTERVAL);
-  pinMode(BUTTON3PIN, INPUT_PULLUP);
-  button3.attach(BUTTON3PIN);
-  button3.interval(DEBOUNCEINTERVAL);
+  pinMode(audioSwitchPin, INPUT_PULLUP);
+  audioSwitch.attach(audioSwitchPin);
+  audioSwitch.interval(DEBOUNCEINTERVAL);
+  pinMode(encPins[2], INPUT_PULLUP);
+  encButton.attach(encPins[2]);
+  encButton.interval(DEBOUNCEINTERVAL);
 
   //setting all the oscillators off
   mixer1.gain(0, 0);
@@ -135,4 +147,3 @@ float fmap(float x, float in_min, float in_max, float out_min, float out_max)
   float value =  (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
   return constrain(value, out_min, out_max);
 }
-

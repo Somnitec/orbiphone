@@ -10,9 +10,10 @@ void ledUpdate() {
     float mappedTotalAverage = fmap( totalAverage, 0, .1, 0, 1);
 
 
-    leds[0][0] = CHSV( (millis() / colorCycleTime) % 255                , 255 * buttonState[1], 255 * mappedTotalAverage);
-    leds[1][0] = CHSV( (millis() / colorCycleTime) % 255                , 255 * buttonState[2], 255 * mappedTotalAverage);
-    leds[2][0] = CHSV( (millis() / colorCycleTime) % 255                , 255 * buttonState[3], 255 * mappedTotalAverage);
+
+    for (int i = 0; i < TONESAMOUNT; i++) {
+      leds[i] = CHSV( (millis() / colorCycleTime) % 255, 255 * ampl[i], 255 * mappedTotalAverage);
+    }
     FastLED.show();
 
   }
