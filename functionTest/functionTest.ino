@@ -93,22 +93,22 @@ void loop() {
 
   for (int i = 0; i < tonesAmount; i++) {
     Serial.print(i);
-    Serial.print("= ");
+    Serial.print(":");
     Serial.print(touchRead(touchPins[i]));
     Serial.print('\t');
   }
 
 
-  Serial.print("enc= ");
+  Serial.print("enc:");
   Serial.print(encoder.read());
   Serial.print('\t');
-  Serial.print("encbut= ");
+  Serial.print("encbut:");
   Serial.print(digitalRead(encPins[2]));
   Serial.print('\t');
-  Serial.print("volume= ");
+  Serial.print("volume:");
   Serial.print(analogRead(volumePin));
   Serial.print('\t');
-  Serial.print("audioswitch= ");
+  Serial.print("audioswitch:");
   Serial.print(digitalRead(audioSwitchPin));
   Serial.println('\t');
 
@@ -118,7 +118,7 @@ void loop() {
   cycle++;
   leds[(cycle % (tonesAmount*10))/10] = CHSV( (millis() / 20) % 255, 255, 255);
 
-  FastLED.show();
+  //FastLED.show();
 
 
   delay(10);

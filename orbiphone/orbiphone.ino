@@ -48,7 +48,7 @@
 
 
 #define TONESAMOUNT 11 // amount of pads active
-float sineMaxAmplitude = 1.0/TONESAMOUNT + .11; //about one divided by the amount of tones available (.11 is the safest value)
+float sineMaxAmplitude = 1.0/TONESAMOUNT + .61; //about one divided by the amount of tones available (.11 is the safest value)
 
 #define debugUpdateTime 250//in ms
 #define audioUpdateTime 100//in us   =1ms
