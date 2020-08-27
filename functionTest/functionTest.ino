@@ -62,6 +62,8 @@ Encoder encoder(encPins[0], encPins[1]);
 #define COLOR_ORDER GRB
 CRGB leds[tonesAmount];
 
+int cycle = 0;
+
 void setup() {
   Serial.begin(9600);
 
@@ -110,10 +112,14 @@ void loop() {
   Serial.print(digitalRead(audioSwitchPin));
   Serial.println('\t');
 
-  for (int i = 0; i < tonesAmount; i++) {
-    leds[i] = CHSV( (millis() / 40) % 255, 255, 255);
-  }
+
+
+  //leds[(cycle % (tonesAmount*10))/10] = CHSV( 0,0,0);
+  cycle++;
+  leds[(cycle % (tonesAmount*10))/10] = CHSV( (millis() / 20) % 255, 255, 255);
+
   FastLED.show();
+
 
   delay(10);
 }
