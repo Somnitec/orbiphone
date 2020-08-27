@@ -46,8 +46,28 @@
 //A13 (37)
 //(38) internal temp sensor
 
+
+//went into touch.c and changed the following values:
+//#define CURRENT   15 // 0 to 15 - current to use, value is 2*(current+1)
+//#define NSCAN     7// number of times to scan, 0 to 31, value is nscan+1
+//#define PRESCALE  5 // prescaler, 0 to 7 - value is 2^(prescaler+1)
+
 #include <FastLED.h>
 #include <Encoder.h>
+#include <Audio.h>
+
+AudioSynthToneSweep myEffect;
+AudioOutputAnalog      audioOutput;        // audio shield: headphones & line-out
+
+// The tone sweep goes to left and right channels
+AudioConnection c1(myEffect, 0, audioOutput, 0);
+AudioConnection c2(myEffect, 0, audioOutput, 1);
+
+float t_ampx = 0.1;
+int t_lox = 20;
+int t_hix = 2200;
+// Length of time for the sweep in seconds
+float t_timex = 10;
 
 const int tonesAmount = 11;
 const int touchPins[11] = {0, 1, 16, 15, 17, 22, 23, 25, 32, 33, 19};
@@ -85,19 +105,48 @@ void setup() {
   pinMode(encPins[2], INPUT_PULLUP);
   pinMode(audioSwitchPin, INPUT_PULLUP);
 
+  AudioMemory(10);
+
+  audioOutput.analogReference(EXTERNAL); // much louder!
+  delay(50);             // time for DAC voltage stable
+  pinMode(5, OUTPUT);
+  digitalWrite(5, HIGH); // turn on the amplifier
+  delay(10);
+
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
+  Serial.println("setup done");
+
+
 }
 
 void loop() {
+  digitalWrite(5, !digitalRead(audioSwitchPin));
 
+
+  if (!myEffect.isPlaying() && !digitalRead(encPins[2])) {
+    if (!myEffect.play(t_ampx, t_lox, t_hix, t_timex)) {
+      Serial.println("AudioSynthToneSweep - begin failed");
+      while (1);
+    }
+  }
+
+  elapsedMicros measuretime = 0;
   for (int i = 0; i < tonesAmount; i++) {
     Serial.print(i);
     Serial.print(":");
     Serial.print(touchRead(touchPins[i]));
     Serial.print('\t');
   }
-
+ 
+  Serial.print("measuretime:");
+  Serial.print(measuretime);
+  Serial.print('\t');
+  //  int i = 8;
+  //  Serial.print(i);
+  //  Serial.print(":");
+  //  Serial.print(touchRead(touchPins[i]));
+  //  Serial.print('\t');
 
   Serial.print("enc:");
   Serial.print(encoder.read());
@@ -116,7 +165,7 @@ void loop() {
 
   //leds[(cycle % (tonesAmount*10))/10] = CHSV( 0,0,0);
   cycle++;
-  leds[(cycle % (tonesAmount*10))/10] = CHSV( (millis() / 20) % 255, 255, 255);
+  leds[(cycle % (tonesAmount * 10)) / 10] = CHSV( (millis() / 20) % 255, 255, 255);
 
   //FastLED.show();
 

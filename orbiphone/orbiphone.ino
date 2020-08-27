@@ -47,8 +47,14 @@
 //(38) internal temp sensor
 
 
+//went into touch.c and changed the following values:
+//#define CURRENT   15 // 0 to 15 - current to use, value is 2*(current+1)
+//#define NSCAN     7// number of times to scan, 0 to 31, value is nscan+1
+//#define PRESCALE  5 // prescaler, 0 to 7 - value is 2^(prescaler+1)
+
+
 #define TONESAMOUNT 11 // amount of pads active
-float sineMaxAmplitude = 1.0/TONESAMOUNT + .61; //about one divided by the amount of tones available (.11 is the safest value)
+float sineMaxAmplitude = 1.0/TONESAMOUNT + .51; //about one divided by the amount of tones available (.11 is the safest value)
 
 #define debugUpdateTime 250//in ms
 #define audioUpdateTime 100//in us   =1ms
@@ -60,12 +66,12 @@ float sineMaxAmplitude = 1.0/TONESAMOUNT + .61; //about one divided by the amoun
 #define maxRange 250 //the maximum range of the sensors
 #define glide 10    //glide time for frequency change
 
-#define numReadings  75// running average of the sensor values
+#define numReadings  4 // running average of the sensor values
 
 #define autoCalibTime 3000 //ms how long the values should be stable before autoCalib
 #define autoCalibRange 20 // how stable the values should be for the timer to start
 #define autoCalibSoundRange 0.02 //how much the volume should stay the same for recalibration
-#define calibCycles 50 // it will average this amount of cycles when calibrating
+#define calibCycles 100 // it will average this amount of cycles when calibrating
 
 #define midiUpdateTime 5//in ms
 

@@ -90,7 +90,7 @@ int average[11];
 int range[11];
 float freq[11];
 float ampl[11];
-int buttonState[4]= {0,0,0,0};
+int buttonState[4] = {0, 0, 0, 0};
 float totalAverage;
 
 int readIndex = 0;
@@ -100,7 +100,11 @@ void initializingStuff() {
   Serial.begin(115200);
 
   AudioMemory(12);//increase if the are glitches
-  dac1.analogReference(EXTERNAL);//EXTERNAL is louder, but actually too loud
+  dac1.analogReference(EXTERNAL);//EXTERNAL is louder, but actually to loud
+  delay(50);             // time for DAC voltage stable
+  pinMode(5, OUTPUT);
+  digitalWrite(5, HIGH); // turn on the amplifier
+  delay(10); 
 
   FastLED.addLeds<LED_TYPE, LEDPIN0, COLOR_ORDER>(leds, 0, 1);
   FastLED.addLeds<LED_TYPE, LEDPIN1, COLOR_ORDER>(leds, 1, 1);

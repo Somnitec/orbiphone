@@ -23,11 +23,6 @@
 */
 
 #include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-#include <Bounce.h>
 
 AudioSynthToneSweep myEffect;
 AudioOutputAnalog      audioOutput;        // audio shield: headphones & line-out
