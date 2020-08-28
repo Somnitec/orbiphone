@@ -2,7 +2,7 @@
 elapsedMicros audioUpdateTimer;
 
 int toneSet[8][11] = {
-  {NOTE_C4, NOTE_A3, NOTE_G3, NOTE_E3, NOTE_D3, NOTE_C3, NOTE_A2, NOTE_G2, NOTE_E2, NOTE_D2, NOTE_C2}, //0= 0 0 0    C
+  {NOTE_C5, NOTE_A4, NOTE_G4, NOTE_E4, NOTE_D4, NOTE_C4, NOTE_A3, NOTE_G3, NOTE_E3, NOTE_D3, NOTE_C3}, //0= 0 0 0    C
   {NOTE_A2, NOTE_D3, NOTE_FS3, NOTE_A3, NOTE_D4, NOTE_FS4, NOTE_A4, NOTE_D5, NOTE_FS5, NOTE_A5, NOTE_D6}, //1= 1 0 0    D/A
   {NOTE_E2, NOTE_E3, NOTE_A3, NOTE_B3, NOTE_E4, NOTE_A4,   NOTE_B4, NOTE_E5, NOTE_A5, NOTE_B5, NOTE_E6}, //2= 0 1 0    Esus
   {NOTE_G2, NOTE_B3, NOTE_D3, NOTE_G3, NOTE_B4, NOTE_D4, NOTE_G4, NOTE_B5, NOTE_D5, NOTE_G5, NOTE_G6}, //3= 1 1 0    G
@@ -59,11 +59,11 @@ void setAmplitudes() {
 
     for (int j = 0; j < numReadings; j++) {
       total[i] +=  readings[i][j];
-      if (readings[i][readIndex] < mini[i])mini[i] = readings[i][j];
-      if (readings[i][readIndex] > maxi[i])maxi[i] = readings[i][j];
+      //if (readings[i][readIndex] < mini[i])mini[i] = readings[i][j];
+      //if (readings[i][readIndex] > maxi[i])maxi[i] = readings[i][j];
     }
     average[i] = total[i] / numReadings;
-    range[i] = maxi[i] - mini[i];
+    //range[i] = maxi[i] - mini[i];
     ampl[i] = fmap(average[i], lowCal[i], highCal[i], 0, 1); //mapping the value to a 0 - 1 range
 
     totalAverage += ampl[i];
