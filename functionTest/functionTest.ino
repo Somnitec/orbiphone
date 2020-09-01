@@ -149,7 +149,7 @@ void loop() {
   //  Serial.print('\t');
 
   Serial.print("enc:");
-  Serial.print(encoder.read());
+  Serial.print((abs(encoder.read())/4)%3);
   Serial.print('\t');
   Serial.print("encbut:");
   Serial.print(digitalRead(encPins[2]));
@@ -167,7 +167,7 @@ void loop() {
   cycle++;
   leds[(cycle % (tonesAmount * 10)) / 10] = CHSV( (millis() / 20) % 255, 255, 255);
 
-  //FastLED.show();
+  FastLED.show();
 
 
   delay(10);

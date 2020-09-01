@@ -1,4 +1,4 @@
-//WIRES 
+//WIRES
 //gnd   BLACK  BLUE
 //vcc   RED    ORANGE
 //touch GREEN  BROWN
@@ -32,7 +32,7 @@
 // ---backside
 //24    LED7
 //25 t touchpad 7
-//26   LED9 
+//26   LED9
 //27    enc1
 //28    enc0
 //29   SCL1  - I2C Clock for motion sensors   (IMPORT wire1.h!)
@@ -40,7 +40,7 @@
 //31   LED8
 //32 t touchpad 8
 //33 t touchpad 9
-//A10 (34)  
+//A10 (34)
 //A11 (35)
 //A12 (36) ??? volume???
 //A13 (37)
@@ -54,33 +54,37 @@
 
 
 #define TONESAMOUNT 11 // amount of pads active
-float sineMaxAmplitude = 1.0/TONESAMOUNT + .41; //about one divided by the amount of tones available (.11 is the safest value)
+float sineMaxAmplitude = 1.0 / TONESAMOUNT + .41; //about one divided by the amount of tones available (.11 is the safest value)
 
-#define debugUpdateTime 250//in ms
+#define debugUpdateTime 50//in ms
 #define audioUpdateTime 100//in us   =1ms
 #define ledUpdateTime 10//in ms    10ms = 100Hz
 #define buttonUpdateTime 1//in ms
 #define calibrationUpdateTime 5//in ms
 
-#define lowThreshold 20 //a value to reach before the thing gets triggered
-#define maxRange 150 //the maximum range of the sensors
+#define lowThreshold 15 //a value to reach before the thing gets triggered
+#define maxRange 250 //the maximum range of the sensors
 #define glide 10    //glide time for frequency change
 
 #define numReadings  10 // running average of the sensor values
 
-#define autoCalibTime 10000 //ms how long the values should be stable before autoCalib
+#define autoCalibTime 5000 //ms how long the values should be stable before autoCalib
 #define autoCalibRange 20 // how stable the values should be for the timer to start
 #define autoCalibSoundRange 0.02 //how much the volume should stay the same for recalibration
-#define calibCycles 100 // it will average this amount of cycles when calibrating
+
+#define numReadingsCal  10 // running average of the sensor values
+#define calibCycles 10 // it will average this amount of cycles when calibrating
 
 #define midiUpdateTime 5//in ms
+
+int encClicks = 0;
 
 void setup() {
   initializingStuff();
 }
-
+bool firstTime = true;
 void loop() {
-  
+
   calibrationUpdate();
   buttonUpdate();
   audioUpdate();
@@ -88,6 +92,9 @@ void loop() {
   debugUpdate();
   midiUpdate();
 
-  
-  
+  if (firstTime) {
+    baselineCalibration();
+    firstTime = false;
+  }
+
 }

@@ -26,17 +26,17 @@ CRGB leds[TONESAMOUNT];
 #include <SerialFlash.h>
 
 // GUItool: begin automatically generated code
-AudioSynthWaveformSineHires sine1;          //xy=1090,693
-AudioSynthWaveformSineHires sine2;          //xy=1112,575
-AudioSynthWaveformSineHires sine3;          //xy=1123,644
-AudioSynthWaveformSineHires sine4;          //xy=1137,612
-AudioSynthWaveformSineHires sine5;          //xy=1140,285
-AudioSynthWaveformSineHires sine6;          //xy=1140,332
-AudioSynthWaveformSineHires sine7;          //xy=1140,481
-AudioSynthWaveformSineHires sine8;          //xy=1142,239
-AudioSynthWaveformSineHires sine9;          //xy=1145,524
-AudioSynthWaveformSineHires sine10;         //xy=1154,432
-AudioSynthWaveformSineHires sine11;         //xy=1175,375
+AudioSynthWaveform sine1;          //xy=1090,693
+AudioSynthWaveform sine2;          //xy=1112,575
+AudioSynthWaveform sine3;          //xy=1123,644
+AudioSynthWaveform sine4;          //xy=1137,612
+AudioSynthWaveform sine5;          //xy=1140,285
+AudioSynthWaveform sine6;          //xy=1140,332
+AudioSynthWaveform sine7;          //xy=1140,481
+AudioSynthWaveform sine8;          //xy=1142,239
+AudioSynthWaveform sine9;          //xy=1145,524
+AudioSynthWaveform sine10;         //xy=1154,432
+AudioSynthWaveform sine11;         //xy=1175,375
 AudioMixer4              mixer1;         //xy=1434,551
 AudioMixer4              mixer2;         //xy=1454,422
 AudioMixer4              mixer3;         //xy=1467,307
@@ -66,6 +66,9 @@ AudioConnection          patchCord18(amp1, dac1);
 // GUItool: end automatically generated code
 
 
+#include <Encoder.h>
+
+
 const int encPins[] = {28, 27, 14};
 const int audioSwitchPin = 7;
 const int volumePin = 36;
@@ -73,6 +76,8 @@ const int volumePin = 36;
 
 Bounce audioSwitch = Bounce();
 Bounce encButton = Bounce();
+
+Encoder encoder(encPins[0], encPins[1]);
 
 
 int valueArray[11][6] = {//pin, lowcal,highcal,average,range,frequency
@@ -89,13 +94,13 @@ int valueArray[11][6] = {//pin, lowcal,highcal,average,range,frequency
   {19, 600, 700, 0, 0, 0}
 };
 int sensor[11] = {0, 1, 16, 15, 17, 22, 23, 25, 32, 33, 19};
-int readings[11][numReadings];
-int lowCal[11];
-int highCal[11];
-int average[11];
-int range[11];
-float freq[11];
-float ampl[11];
+int readings[TONESAMOUNT][numReadings];
+int lowCal[TONESAMOUNT];
+int highCal[TONESAMOUNT];
+int average[TONESAMOUNT];
+int range[TONESAMOUNT];
+float freq[TONESAMOUNT];
+float ampl[TONESAMOUNT];
 int buttonState[4] = {0, 0, 0, 0};
 float totalAverage;
 
@@ -106,11 +111,40 @@ void initializingStuff() {
   Serial.begin(115200);
 
   AudioMemory(12);//increase if the are glitches
+
+
+  //setting all the oscillators off
+  mixer1.gain(0, 0);
+  mixer1.gain(1, 0);
+  mixer1.gain(2, 0);
+  mixer1.gain(3, 0);
+  mixer2.gain(0, 0);
+  mixer2.gain(1, 0);
+  mixer2.gain(2, 0);
+  mixer2.gain(3, 0);
+  mixer3.gain(0, 0);
+  mixer3.gain(1, 0);
+  mixer3.gain(2, 0);
+
+  float noteVol = 0.4;
+  sine1.begin(noteVol, 220, WAVEFORM_SINE);
+  sine2.begin(noteVol, 220, WAVEFORM_SINE);
+  sine3.begin(noteVol, 220, WAVEFORM_SINE);
+  sine4.begin(noteVol, 220, WAVEFORM_SINE);
+  sine5.begin(noteVol, 220, WAVEFORM_SINE);
+  sine6.begin(noteVol, 220, WAVEFORM_SINE);
+  sine7.begin(noteVol, 220, WAVEFORM_SINE);
+  sine8.begin(noteVol, 220, WAVEFORM_SINE);
+  sine9.begin(noteVol, 220, WAVEFORM_SINE);
+  sine10.begin(noteVol, 220, WAVEFORM_SINE);
+  sine11.begin(noteVol, 220, WAVEFORM_SINE);
+
+
   dac1.analogReference(EXTERNAL);//EXTERNAL is louder, but actually to loud
   delay(50);             // time for DAC voltage stable
   pinMode(5, OUTPUT);
   digitalWrite(5, HIGH); // turn on the amplifier
-  delay(10); 
+  delay(10);
 
   FastLED.addLeds<LED_TYPE, LEDPIN0, COLOR_ORDER>(leds, 0, 1);
   FastLED.addLeds<LED_TYPE, LEDPIN1, COLOR_ORDER>(leds, 1, 1);
@@ -128,7 +162,7 @@ void initializingStuff() {
   //pinMode(13, OUTPUT); // turn of the led as this might interfer with SPI
   //digitalWrite(13, HIGH);
 
-  baselineCalibration();
+
 
   //set up push buttons
   pinMode(audioSwitchPin, INPUT_PULLUP);
@@ -138,20 +172,14 @@ void initializingStuff() {
   encButton.attach(encPins[2]);
   encButton.interval(DEBOUNCEINTERVAL);
 
-  //setting all the oscillators off
-  mixer1.gain(0, 0);
-  mixer1.gain(1, 0);
-  mixer1.gain(2, 0);
-  mixer1.gain(3, 0);
-  mixer2.gain(0, 0);
-  mixer2.gain(1, 0);
-  mixer2.gain(2, 0);
-  mixer2.gain(3, 0);
-  mixer3.gain(0, 0);
-  mixer3.gain(1, 0);
-  mixer3.gain(2, 0);
+
+
+
 
   amp1.gain(1.0);
+
+  //delay(500);
+  baselineCalibration();
 }
 
 float fmap(float x, float in_min, float in_max, float out_min, float out_max)
