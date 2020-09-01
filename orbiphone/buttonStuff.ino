@@ -3,6 +3,7 @@ elapsedMillis buttonUpdateTimer;
 void buttonUpdate() {
   if (buttonUpdateTimer > buttonUpdateTime) {
     buttonUpdateTimer = 0;
+    amp1.gain(fmap(analogRead(volumePin),1023,0,0.0,1.0));
 //
 //    button1.update();
 //    button2.update();

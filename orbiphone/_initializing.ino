@@ -19,46 +19,52 @@
 #define COLOR_ORDER GRB
 CRGB leds[TONESAMOUNT];
 
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
 // GUItool: begin automatically generated code
-AudioSynthWaveformSineHires sine1;   //xy=301,889
-AudioSynthWaveformSineHires sine2;    //xy=323,771
-AudioSynthWaveformSineHires sine3;   //xy=334,840
-AudioSynthWaveformSineHires sine4;    //xy=348,808
-AudioSynthWaveformSineHires sine5;    //xy=351,481
-AudioSynthWaveformSineHires sine6;    //xy=351,528
-AudioSynthWaveformSineHires sine7;    //xy=351,677
-AudioSynthWaveformSineHires sine8;    //xy=353,435
-AudioSynthWaveformSineHires sine9;    //xy=356,720
-AudioSynthWaveformSineHires sine10;    //xy=365,628
-AudioSynthWaveformSineHires sine11;    //xy=386,571
-AudioMixer4              mixer1;         //xy=645,747
-AudioMixer4              mixer2;         //xy=665,618
-AudioMixer4              mixer3;         //xy=678,503
-AudioMixer4              mixer4;         //xy=899,621
-AudioAnalyzePeak         peak1;          //xy=1070,500
-AudioAnalyzeRMS          rms1;          //xy=1080,510
-AudioOutputAnalog        dac1;           //xy=1078,625
-//AudioOutputUSB           usb1;
-AudioConnection          patchCord1( sine1,  0, mixer1, 0);
-AudioConnection          patchCord2( sine2,  0, mixer1, 1);
-AudioConnection          patchCord3( sine3,  0, mixer1, 2);
-AudioConnection          patchCord4( sine4,  0, mixer1, 3);
-AudioConnection          patchCord5( sine5,  0, mixer2, 0);
-AudioConnection          patchCord6( sine6,  0, mixer2, 1);
-AudioConnection          patchCord7( sine7,  0, mixer2, 2);
-AudioConnection          patchCord8( sine8,  0, mixer2, 3);
-AudioConnection          patchCord9( sine9,  0, mixer3, 0);
+AudioSynthWaveformSineHires sine1;          //xy=1090,693
+AudioSynthWaveformSineHires sine2;          //xy=1112,575
+AudioSynthWaveformSineHires sine3;          //xy=1123,644
+AudioSynthWaveformSineHires sine4;          //xy=1137,612
+AudioSynthWaveformSineHires sine5;          //xy=1140,285
+AudioSynthWaveformSineHires sine6;          //xy=1140,332
+AudioSynthWaveformSineHires sine7;          //xy=1140,481
+AudioSynthWaveformSineHires sine8;          //xy=1142,239
+AudioSynthWaveformSineHires sine9;          //xy=1145,524
+AudioSynthWaveformSineHires sine10;         //xy=1154,432
+AudioSynthWaveformSineHires sine11;         //xy=1175,375
+AudioMixer4              mixer1;         //xy=1434,551
+AudioMixer4              mixer2;         //xy=1454,422
+AudioMixer4              mixer3;         //xy=1467,307
+AudioMixer4              mixer4;         //xy=1688,425
+AudioAnalyzePeak         peak1;          //xy=1859,304
+AudioAmplifier           amp1;           //xy=1866,434
+AudioAnalyzeRMS          rms1;           //xy=1869,314
+AudioOutputAnalog        dac1;           //xy=2008,426
+AudioConnection          patchCord1(sine1, 0, mixer1, 0);
+AudioConnection          patchCord2(sine2, 0, mixer1, 1);
+AudioConnection          patchCord3(sine3, 0, mixer1, 2);
+AudioConnection          patchCord4(sine4, 0, mixer1, 3);
+AudioConnection          patchCord5(sine5, 0, mixer2, 0);
+AudioConnection          patchCord6(sine6, 0, mixer2, 1);
+AudioConnection          patchCord7(sine7, 0, mixer2, 2);
+AudioConnection          patchCord8(sine8, 0, mixer2, 3);
+AudioConnection          patchCord9(sine9, 0, mixer3, 0);
 AudioConnection          patchCord10(sine10, 0, mixer3, 1);
 AudioConnection          patchCord11(sine11, 0, mixer3, 2);
 AudioConnection          patchCord12(mixer1, 0, mixer4, 0);
 AudioConnection          patchCord13(mixer2, 0, mixer4, 1);
 AudioConnection          patchCord14(mixer3, 0, mixer4, 2);
-AudioConnection          patchCord15(mixer4, dac1);
-AudioConnection          patchCord16(mixer4, peak1);
-AudioConnection          patchCord17(mixer4, rms1);
-//AudioConnection          patchCord18(mixer4,0, usb1,0);
-//AudioConnection          patchCord19(mixer4,0, usb1,1);
+AudioConnection          patchCord15(mixer4, peak1);
+AudioConnection          patchCord16(mixer4, rms1);
+AudioConnection          patchCord17(mixer4, amp1);
+AudioConnection          patchCord18(amp1, dac1);
 // GUItool: end automatically generated code
+
 
 const int encPins[] = {28, 27, 14};
 const int audioSwitchPin = 7;
@@ -144,6 +150,8 @@ void initializingStuff() {
   mixer3.gain(0, 0);
   mixer3.gain(1, 0);
   mixer3.gain(2, 0);
+
+  amp1.gain(1.0);
 }
 
 float fmap(float x, float in_min, float in_max, float out_min, float out_max)
