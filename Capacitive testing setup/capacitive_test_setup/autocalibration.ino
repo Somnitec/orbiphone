@@ -1,5 +1,5 @@
 
-
+/*
 #define lowThreshold 5 //a value to reach before the thing gets triggered
 #define maxRange 250 //the maximum range of the sensors
 
@@ -48,3 +48,4 @@ void baselineCalibration() {
   }
   Serial.println("CALIBRATION");
 }
+*/
