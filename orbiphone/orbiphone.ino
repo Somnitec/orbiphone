@@ -7,42 +7,42 @@
 //PINS
 //0 t  touchpad 0
 //1 t  touchpad 1
-//2    IRQ (interrupt from motion sensors)
-//3     LED1
-//4     LED0
-//5   AMP_EN  set High to enable amplifier
-//6   MEM_CS  memory  (pull Low to access memory)
-//7    audio jack connected    ((disconnected //LED_EN  set High to send LED data//))
-//8     LED4
-//9     LED3
-//10    LED2
-//11   MOSI memory,led  SPI Data
-//12   MISO memory  SPI Data
-//13   SCK  memory,led  SPI Clock
-//14    enc but0
-//15 t touchpad 3
-//16 t touchpad 2
-//17 t touchpad 4
-//18 t SDA0   LED10
-//19 t SCL0   touchpad 10
-//20    LED6
-//21    LED5
-//22 t touchpad 5
-//23 t touchpad 6
+//2    LED0
+//3    pwmAudio1
+//4    pwmAudio0
+//5    LED1
+//6    LED2
+//7    LED3
+//8    LED4
+//9    LED5
+//10   - (jack sensor -> disconnected)
+//11   enc1
+//12   enc0
+//13   teensy led
+//14   LED6
+//15 t touchpad 5
+//16 t touchpad 4
+//17 t touchpad 3
+//18 t touchpad 7
+//19 t touchpad 9
+//20    LED11
+//21    ampEnable (potswitch -> switched around)
+//22 t touchpad 10
+//23 t touchpad 11
 // ---backside
-//24    LED7
-//25 t touchpad 7
+//24   encSwitch
+//25 t touchpad 2
 //26   LED9
-//27    enc1
-//28    enc0
-//29   SCL1  - I2C Clock for motion sensors   (IMPORT wire1.h!)
-//30   SDA1  - I2C Data for motion sensors    (IMPORT wire1.h!)
-//31   LED8
-//32 t touchpad 8
-//33 t touchpad 9
-//A10 (34)
-//A11 (35)
-//A12 (36) ??? volume???
+//27   LED8
+//28   LED7
+//29   - (SCL1   (IMPORT wire1.h!))
+//30   - (SDA1   (IMPORT wire1.h!))
+//31   LED10
+//32 t touchpad 6
+//33 t touchpad 8
+//A10 (34) Potentiometer
+//A11 (35) - (battery sensor -> disconnected)
+//A12 (36)
 //A13 (37)
 //(38) internal temp sensor
 

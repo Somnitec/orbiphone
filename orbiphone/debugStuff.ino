@@ -57,7 +57,7 @@ void debugUpdate() {
     //    }
 
     //for doing an individual reading
-    int i = 6;
+    int i = 10;
     Serial.print("reading");
     Serial.print(i);
     Serial.print(':');

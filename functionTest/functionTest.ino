@@ -69,11 +69,26 @@ int t_hix = 2200;
 // Length of time for the sweep in seconds
 float t_timex = 10;
 
+#define LEDPIN0          2
+#define LEDPIN1          5
+#define LEDPIN2          6
+#define LEDPIN3          7
+#define LEDPIN4          8
+#define LEDPIN5          9
+#define LEDPIN6          14
+#define LEDPIN7          28
+#define LEDPIN8          27
+#define LEDPIN9          26
+#define LEDPIN10         31
+#define LEDPIN11         20
+
 const int tonesAmount = 11;
 const int touchPins[12] = {0, 1, 25, 17, 16, 15, 32, 18, 33, 19, 22, 23};
 const int encPins[] = {12, 11, 24};
 const int audioSwitchPin = 10;
 const int volumePin = 34;
+
+
 
 Encoder encoder(encPins[0], encPins[1]);
 
@@ -90,18 +105,17 @@ void setup() {
   Serial.begin(9600);
 
 
-  FastLED.addLeds<LED_TYPE, 2, COLOR_ORDER>(leds, 0, 1);
-  FastLED.addLeds<LED_TYPE, 5, COLOR_ORDER>(leds, 1, 1);
-  FastLED.addLeds<LED_TYPE, 6, COLOR_ORDER>(leds, 2, 1);
-  FastLED.addLeds<LED_TYPE, 7, COLOR_ORDER>(leds, 3, 1);
-  FastLED.addLeds<LED_TYPE, 8, COLOR_ORDER>(leds, 4, 1);
-  FastLED.addLeds<LED_TYPE, 9, COLOR_ORDER>(leds, 5, 1);
-  FastLED.addLeds<LED_TYPE, 14, COLOR_ORDER>(leds, 6, 1);
-  FastLED.addLeds<LED_TYPE, 28, COLOR_ORDER>(leds, 7, 1);
-  FastLED.addLeds<LED_TYPE, 27, COLOR_ORDER>(leds, 8, 1);
-  FastLED.addLeds<LED_TYPE, 26, COLOR_ORDER>(leds, 9, 1);
-  FastLED.addLeds<LED_TYPE, 31, COLOR_ORDER>(leds, 10, 1);
-  FastLED.addLeds<LED_TYPE, 20, COLOR_ORDER>(leds, 11, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN0, COLOR_ORDER>(leds, 0, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN1, COLOR_ORDER>(leds, 1, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN2, COLOR_ORDER>(leds, 2, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN3, COLOR_ORDER>(leds, 3, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN4, COLOR_ORDER>(leds, 4, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN5, COLOR_ORDER>(leds, 5, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN6, COLOR_ORDER>(leds, 6, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN7, COLOR_ORDER>(leds, 7, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN8, COLOR_ORDER>(leds, 8, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN9, COLOR_ORDER>(leds, 9, 1);
+  FastLED.addLeds<LED_TYPE, LEDPIN10, COLOR_ORDER>(leds, 10, 1);
 
   FastLED.setBrightness(  BRIGHTNESS );
 

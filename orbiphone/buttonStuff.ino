@@ -7,18 +7,13 @@ void buttonUpdate() {
     amp1.gain(fmap(analogRead(volumePin), 1023, 0, 0.0, 1.0));
 
     encButton.update();
-    if (encButton.fell())encClicks++;
+    if (encButton.fell()) {
+      encClicks++;
 
 
-
-
-    long newPosition = encoder.read();
-    if (newPosition != oldPosition) {
-      oldPosition = newPosition;
-
-      if ((abs(encoder.read()) / 4) % 4 == 0 ) {
-        float noteVol = 0.4;
-        sine1.begin(noteVol, 220, WAVEFORM_SINE);
+      if (abs(encClicks) % 4 == 0 ) {
+      float noteVol = 0.4;
+      sine1.begin(noteVol, 220, WAVEFORM_SINE);
         sine2.begin(noteVol, 220, WAVEFORM_SINE);
         sine3.begin(noteVol, 220, WAVEFORM_SINE);
         sine4.begin(noteVol, 220, WAVEFORM_SINE);
@@ -29,9 +24,9 @@ void buttonUpdate() {
         sine9.begin(noteVol, 220, WAVEFORM_SINE);
         sine10.begin(noteVol, 220, WAVEFORM_SINE);
         sine11.begin(noteVol, 220, WAVEFORM_SINE);
-      } else if ((abs(encoder.read()) / 4) % 4 == 1 ) {
-        float noteVol = 0.3;
-        sine1.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+      } else if ((abs(encClicks)) % 4 == 1 ) {
+      float noteVol = 0.3;
+      sine1.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         sine2.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         sine3.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         sine4.begin(noteVol, 220, WAVEFORM_TRIANGLE);
@@ -42,9 +37,9 @@ void buttonUpdate() {
         sine9.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         sine10.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         sine11.begin(noteVol, 220, WAVEFORM_TRIANGLE);
-      } else if ((abs(encoder.read()) / 4) % 4 == 2 ) {
-        float noteVol = 0.2;
-        sine1.begin(noteVol, 220, WAVEFORM_SQUARE);
+      } else if ((abs(encClicks) ) % 4 == 2 ) {
+      float noteVol = 0.2;
+      sine1.begin(noteVol, 220, WAVEFORM_SQUARE);
         sine2.begin(noteVol, 220, WAVEFORM_SQUARE);
         sine3.begin(noteVol, 220, WAVEFORM_SQUARE);
         sine4.begin(noteVol, 220, WAVEFORM_SQUARE);
@@ -55,9 +50,9 @@ void buttonUpdate() {
         sine9.begin(noteVol, 220, WAVEFORM_SQUARE);
         sine10.begin(noteVol, 220, WAVEFORM_SQUARE);
         sine11.begin(noteVol, 220, WAVEFORM_SQUARE);
-      }else if ((abs(encoder.read()) / 4) % 4 == 3 ) {
-        float noteVol = 0.2;
-        sine1.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+      } else if ((abs(encClicks) ) % 4 == 3 ) {
+      float noteVol = 0.2;
+      sine1.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
         sine2.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
         sine3.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
         sine4.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
@@ -69,6 +64,13 @@ void buttonUpdate() {
         sine10.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
         sine11.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
       }
+    }
+
+
+
+    long newPosition = encoder.read();
+    if (newPosition != oldPosition) {
+      oldPosition = newPosition;
 
 
     }

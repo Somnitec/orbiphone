@@ -21,7 +21,7 @@ void audioUpdate() {
 
 void setFrequencies() {
   for (int i = 0; i < TONESAMOUNT; i++) {
-    freq[i] = (freq[i] * glide + toneSet[encClicks%toneSets][i] * 2) / (1 + glide);
+    freq[i] = (freq[i] * glide + toneSet[(abs(encoder.read()) / 4)%toneSets][i] * 2) / (1 + glide);
   }
 
   sine1.frequency(freq[0]);

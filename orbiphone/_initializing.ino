@@ -2,17 +2,18 @@
 #include <FastLED.h>
 #include <Bounce2.h>
 
-#define LEDPIN0          4
-#define LEDPIN1          3
-#define LEDPIN2          10
-#define LEDPIN3          9
+#define LEDPIN0          2
+#define LEDPIN1          5
+#define LEDPIN2          6
+#define LEDPIN3          7
 #define LEDPIN4          8
-#define LEDPIN5          21
-#define LEDPIN6          20
-#define LEDPIN7          24
-#define LEDPIN8          31
+#define LEDPIN5          9
+#define LEDPIN6          14
+#define LEDPIN7          28
+#define LEDPIN8          27
 #define LEDPIN9          26
-#define LEDPIN10         18
+#define LEDPIN10         31
+#define LEDPIN11         20
 
 #define BRIGHTNESS  255
 #define LED_TYPE    WS2812B
@@ -25,26 +26,40 @@ CRGB leds[TONESAMOUNT];
 #include <SD.h>
 #include <SerialFlash.h>
 
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
+#include <Audio.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <SD.h>
+#include <SerialFlash.h>
+
 // GUItool: begin automatically generated code
-AudioSynthWaveform sine1;          //xy=1090,693
-AudioSynthWaveform sine2;          //xy=1112,575
-AudioSynthWaveform sine3;          //xy=1123,644
-AudioSynthWaveform sine4;          //xy=1137,612
-AudioSynthWaveform sine5;          //xy=1140,285
-AudioSynthWaveform sine6;          //xy=1140,332
-AudioSynthWaveform sine7;          //xy=1140,481
-AudioSynthWaveform sine8;          //xy=1142,239
-AudioSynthWaveform sine9;          //xy=1145,524
-AudioSynthWaveform sine10;         //xy=1154,432
-AudioSynthWaveform sine11;         //xy=1175,375
-AudioMixer4              mixer1;         //xy=1434,551
-AudioMixer4              mixer2;         //xy=1454,422
-AudioMixer4              mixer3;         //xy=1467,307
-AudioMixer4              mixer4;         //xy=1688,425
-AudioAnalyzePeak         peak1;          //xy=1859,304
-AudioAmplifier           amp1;           //xy=1866,434
-AudioAnalyzeRMS          rms1;           //xy=1869,314
-AudioOutputAnalog        dac1;           //xy=2008,426
+AudioSynthWaveform       sine1;          //xy=862,908
+AudioSynthWaveform       sine2;          //xy=884,790
+AudioSynthWaveform       sine3;          //xy=895,859
+AudioSynthWaveform       sine4;          //xy=909,827
+AudioSynthWaveform       sine5;          //xy=912,500
+AudioSynthWaveform       sine6;          //xy=912,547
+AudioSynthWaveform       sine7;          //xy=912,696
+AudioSynthWaveform       sine8;          //xy=914,454
+AudioSynthWaveform       sine9;          //xy=917,739
+AudioSynthWaveform       sine10;         //xy=926,647
+AudioSynthWaveform       sine11;         //xy=947,590
+AudioMixer4              mixer1;         //xy=1206,766
+AudioMixer4              mixer2;         //xy=1226,637
+AudioMixer4              mixer3;         //xy=1239,522
+AudioMixer4              mixer4;         //xy=1460,640
+AudioAnalyzePeak         peak1;          //xy=1631,519
+AudioAmplifier           amp1;           //xy=1638,649
+AudioAnalyzeRMS          rms1;           //xy=1641,529
+AudioFilterStateVariable filter1;        //xy=1747,743
+AudioOutputAnalog        dac1;           //xy=1780,641
+//AudioOutputPWM           pwm1;           //xy=1884,758
 AudioConnection          patchCord1(sine1, 0, mixer1, 0);
 AudioConnection          patchCord2(sine2, 0, mixer1, 1);
 AudioConnection          patchCord3(sine3, 0, mixer1, 2);
@@ -63,15 +78,19 @@ AudioConnection          patchCord15(mixer4, peak1);
 AudioConnection          patchCord16(mixer4, rms1);
 AudioConnection          patchCord17(mixer4, amp1);
 AudioConnection          patchCord18(amp1, dac1);
+AudioConnection          patchCord19(amp1, 0, filter1, 0);
+//AudioConnection          patchCord20(filter1, 0, pwm1, 0);
 // GUItool: end automatically generated code
+
+
 
 
 #include <Encoder.h>
 
 
-const int encPins[] = {28, 27, 14};
-const int audioSwitchPin = 7;
-const int volumePin = 36;
+const int encPins[] = {12, 11, 24};
+const int audioSwitchPin = 10;
+const int volumePin = 34;
 #define DEBOUNCEINTERVAL       5//ms
 
 Bounce audioSwitch = Bounce();
@@ -83,17 +102,17 @@ Encoder encoder(encPins[0], encPins[1]);
 int valueArray[11][6] = {//pin, lowcal,highcal,average,range,frequency
   {0, 600, 700, 0, 0, 0},
   {1, 600, 700, 0, 0, 0},
+  {25, 600, 700, 0, 0, 0},
+  {17, 600, 700, 0, 0, 0},
   {16, 600, 700, 0, 0, 0},
   {15, 600, 700, 0, 0, 0},
-  {17, 600, 700, 0, 0, 0},
-  {22, 600, 700, 0, 0, 0},
-  {23, 600, 700, 0, 0, 0},
-  {25, 600, 700, 0, 0, 0},
   {32, 600, 700, 0, 0, 0},
+  {18, 600, 700, 0, 0, 0},
   {33, 600, 700, 0, 0, 0},
-  {19, 600, 700, 0, 0, 0}
+  {19, 600, 700, 0, 0, 0},
+  {22, 600, 700, 0, 0, 0}
 };
-int sensor[11] = {0, 1, 16, 15, 17, 22, 23, 25, 32, 33, 19};
+int sensor[12] = {0, 1, 25, 17, 16, 15, 32, 18, 33, 19, 22, 23};
 int readings[TONESAMOUNT][numReadings];
 int lowCal[TONESAMOUNT];
 int highCal[TONESAMOUNT];
@@ -110,8 +129,9 @@ void initializingStuff() {
 
   Serial.begin(115200);
 
-  AudioMemory(12);//increase if the are glitches
+  AudioMemory(15);//increase if the are glitches
 
+  filter1.frequency(400);
 
   //setting all the oscillators off
   mixer1.gain(0, 0);
