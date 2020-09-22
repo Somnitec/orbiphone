@@ -7,42 +7,42 @@
 //PINS
 //0 t  touchpad 0
 //1 t  touchpad 1
-//2    IRQ (interrupt from motion sensors)
-//3     LED1
-//4     LED0
-//5   AMP_EN  set High to enable amplifier
-//6   MEM_CS  memory  (pull Low to access memory)
-//7    audio jack connected    ((disconnected //LED_EN  set High to send LED data//))
-//8     LED4
-//9     LED3
-//10    LED2
-//11   MOSI memory,led  SPI Data
-//12   MISO memory  SPI Data
-//13   SCK  memory,led  SPI Clock
-//14    enc but0
-//15 t touchpad 3
-//16 t touchpad 2
-//17 t touchpad 4
-//18 t SDA0   LED10
-//19 t SCL0   touchpad 10
-//20    LED6
-//21    LED5
-//22 t touchpad 5
-//23 t touchpad 6
+//2    LED0
+//3    pwmAudio1
+//4    pwmAudio0
+//5    LED1
+//6    LED2
+//7    LED3
+//8    LED4
+//9    LED5
+//10   - (jack sensor -> disconnected)
+//11   enc1
+//12   enc0
+//13   teensy led
+//14   LED6
+//15 t touchpad 5
+//16 t touchpad 4
+//17 t touchpad 3
+//18 t touchpad 7
+//19 t touchpad 9
+//20    LED11
+//21    ampEnable (potswitch -> switched around)
+//22 t touchpad 10
+//23 t touchpad 11
 // ---backside
-//24    LED7
-//25 t touchpad 7
+//24   encSwitch
+//25 t touchpad 2
 //26   LED9
-//27    enc1
-//28    enc0
-//29   SCL1  - I2C Clock for motion sensors   (IMPORT wire1.h!)
-//30   SDA1  - I2C Data for motion sensors    (IMPORT wire1.h!)
-//31   LED8
-//32 t touchpad 8
-//33 t touchpad 9
-//A10 (34)
-//A11 (35)
-//A12 (36) ??? volume???
+//27   LED8
+//28   LED7
+//29   - (SCL1   (IMPORT wire1.h!))
+//30   - (SDA1   (IMPORT wire1.h!))
+//31   LED10
+//32 t touchpad 6
+//33 t touchpad 8
+//A10 (34) Potentiometer
+//A11 (35) - (battery sensor -> disconnected)
+//A12 (36)
 //A13 (37)
 //(38) internal temp sensor
 
@@ -58,10 +58,10 @@
 
 AudioSynthToneSweep myEffect;
 AudioOutputAnalog      audioOutput;        // audio shield: headphones & line-out
-
+AudioOutputPWM      audioOutput2;
 // The tone sweep goes to left and right channels
 AudioConnection c1(myEffect, 0, audioOutput, 0);
-AudioConnection c2(myEffect, 0, audioOutput, 1);
+AudioConnection c2(myEffect, 0, audioOutput2, 0);
 
 float t_ampx = 0.1;
 int t_lox = 20;
@@ -70,10 +70,10 @@ int t_hix = 2200;
 float t_timex = 10;
 
 const int tonesAmount = 11;
-const int touchPins[11] = {0, 1, 16, 15, 17, 22, 23, 25, 32, 33, 19};
-const int encPins[] = {28, 27, 14};
-const int audioSwitchPin = 7;
-const int volumePin = 36;
+const int touchPins[12] = {0, 1, 25, 17, 16, 15, 32, 18, 33, 19, 22, 23};
+const int encPins[] = {12, 11, 24};
+const int audioSwitchPin = 10;
+const int volumePin = 34;
 
 Encoder encoder(encPins[0], encPins[1]);
 
@@ -85,32 +85,37 @@ CRGB leds[tonesAmount];
 int cycle = 0;
 
 void setup() {
+  pinMode(21, OUTPUT);
+  digitalWrite(21, LOW); // turn off the amplifier
   Serial.begin(9600);
 
 
-  FastLED.addLeds<LED_TYPE, 4, COLOR_ORDER>(leds, 0, 1);
-  FastLED.addLeds<LED_TYPE, 3, COLOR_ORDER>(leds, 1, 1);
-  FastLED.addLeds<LED_TYPE, 10, COLOR_ORDER>(leds, 2, 1);
-  FastLED.addLeds<LED_TYPE, 9, COLOR_ORDER>(leds, 3, 1);
+  FastLED.addLeds<LED_TYPE, 2, COLOR_ORDER>(leds, 0, 1);
+  FastLED.addLeds<LED_TYPE, 5, COLOR_ORDER>(leds, 1, 1);
+  FastLED.addLeds<LED_TYPE, 6, COLOR_ORDER>(leds, 2, 1);
+  FastLED.addLeds<LED_TYPE, 7, COLOR_ORDER>(leds, 3, 1);
   FastLED.addLeds<LED_TYPE, 8, COLOR_ORDER>(leds, 4, 1);
-  FastLED.addLeds<LED_TYPE, 21, COLOR_ORDER>(leds, 5, 1);
-  FastLED.addLeds<LED_TYPE, 20, COLOR_ORDER>(leds, 6, 1);
-  FastLED.addLeds<LED_TYPE, 24, COLOR_ORDER>(leds, 7, 1);
-  FastLED.addLeds<LED_TYPE, 31, COLOR_ORDER>(leds, 8, 1);
+  FastLED.addLeds<LED_TYPE, 9, COLOR_ORDER>(leds, 5, 1);
+  FastLED.addLeds<LED_TYPE, 14, COLOR_ORDER>(leds, 6, 1);
+  FastLED.addLeds<LED_TYPE, 28, COLOR_ORDER>(leds, 7, 1);
+  FastLED.addLeds<LED_TYPE, 27, COLOR_ORDER>(leds, 8, 1);
   FastLED.addLeds<LED_TYPE, 26, COLOR_ORDER>(leds, 9, 1);
-  FastLED.addLeds<LED_TYPE, 18, COLOR_ORDER>(leds, 10, 1);
+  FastLED.addLeds<LED_TYPE, 31, COLOR_ORDER>(leds, 10, 1);
+  FastLED.addLeds<LED_TYPE, 20, COLOR_ORDER>(leds, 11, 1);
 
   FastLED.setBrightness(  BRIGHTNESS );
 
+  //pinMode(encPins[0], INPUT_PULLUP);
+  //pinMode(encPins[1], INPUT_PULLUP);
   pinMode(encPins[2], INPUT_PULLUP);
-  pinMode(audioSwitchPin, INPUT_PULLUP);
+  //pinMode(audioSwitchPin, INPUT_PULLUP);
 
   AudioMemory(10);
 
   audioOutput.analogReference(EXTERNAL); // much louder!
   delay(50);             // time for DAC voltage stable
-  pinMode(5, OUTPUT);
-  digitalWrite(5, HIGH); // turn on the amplifier
+  pinMode(21, INPUT);// float the amplifier to turn it on
+
   delay(10);
 
   pinMode(13, OUTPUT);
@@ -138,7 +143,7 @@ void loop() {
     Serial.print(touchRead(touchPins[i]));
     Serial.print('\t');
   }
- 
+
   Serial.print("measuretime:");
   Serial.print(measuretime);
   Serial.print('\t');
@@ -149,7 +154,7 @@ void loop() {
   //  Serial.print('\t');
 
   Serial.print("enc:");
-  Serial.print((abs(encoder.read())/4)%3);
+  Serial.print(encoder.read()/4);//4 steps per click
   Serial.print('\t');
   Serial.print("encbut:");
   Serial.print(digitalRead(encPins[2]));
