@@ -24,17 +24,17 @@ void setFrequencies() {
     freq[i] = (freq[i] * glide + toneSet[(abs(encoder.read()) / 4)%toneSets][i] * 2) / (1 + glide);
   }
 
-  sine1.frequency(freq[0]);
-  sine2.frequency(freq[1]);
-  sine3.frequency(freq[2]);
-  sine4.frequency(freq[3]);
-  sine5.frequency(freq[4]);
-  sine6.frequency(freq[5]);
-  sine7.frequency(freq[6]);
-  sine8.frequency(freq[7]);
-  sine9.frequency(freq[8]);
-  sine10.frequency(freq[9]);
-  sine11.frequency(freq[10]);
+  osc0.frequency(freq[0]);
+  osc1.frequency(freq[1]);
+  osc2.frequency(freq[2]);
+  osc3.frequency(freq[3]);
+  osc4.frequency(freq[4]);
+  osc5.frequency(freq[5]);
+  osc6.frequency(freq[6]);
+  osc7.frequency(freq[7]);
+  osc8.frequency(freq[8]);
+  osc9.frequency(freq[9]);
+  osc10.frequency(freq[10]);
 }
 
 void setAmplitudes() {

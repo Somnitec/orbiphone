@@ -46,18 +46,18 @@ void baselineCalibration() {
   //    total[i] = 0;
   //  }
   //  for (int h = 0; h < calibCycles; h++) {
-  //    long subTotal[TONESAMOUNT];
+  //    long suboscTotal[TONESAMOUNT];
   //    for (int i = 0; i < TONESAMOUNT; i++) {
-  //      subTotal[i] = 0;
+  //      suboscTotal[i] = 0;
   //    }
   //    for (int i = 0; i < TONESAMOUNT; i++) {
   //      for (int j = 0; j < numReadingsCal; j++) {
   //
-  //        subTotal[i] +=  touchRead(sensor[i]);
+  //        suboscTotal[i] +=  touchRead(sensor[i]);
   //      }
   //    }
   //    for (int i = 0; i < TONESAMOUNT; i++) {
-  //      total[i] += subTotal[i]  / numReadingsCal;
+  //      total[i] += suboscTotal[i]  / numReadingsCal;
   //      if (i == 4) {
   //        Serial.println(total[i] / h);
   //      }

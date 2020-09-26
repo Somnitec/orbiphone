@@ -57,7 +57,7 @@
 float sineMaxAmplitude = 1.0 / TONESAMOUNT + .41; //about one divided by the amount of tones available (.11 is the safest value)
 
 #define debugUpdateTime 50//in ms
-#define audioUpdateTime 100//in us   =1ms
+#define audioUpdateTime 10//in us   =1ms
 #define ledUpdateTime 10//in ms    10ms = 100Hz
 #define buttonUpdateTime 1//in ms
 #define calibrationUpdateTime 5//in ms
