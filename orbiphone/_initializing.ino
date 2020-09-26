@@ -15,46 +15,12 @@
 #define LEDPIN10         31
 #define LEDPIN11         20
 
+#define ampPin 21
+
 #define BRIGHTNESS  255
 #define LED_TYPE    WS2812B
 #define COLOR_ORDER GRB
 CRGB leds[TONESAMOUNT];
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
 
 #include <Audio.h>
 #include <Wire.h>
@@ -140,20 +106,15 @@ AudioConnection          patchCord36(amp1sub, pwm1);
 // GUItool: end automatically generated code
 
 
-
-
-
-
-
 #include <Encoder.h>
 
 
 const int encPins[] = {12, 11, 24};
-const int audioSwitchPin = 10;
+
 const int volumePin = 34;
 #define DEBOUNCEINTERVAL       5//ms
 
-Bounce audioSwitch = Bounce();
+//Bounce audioSwitch = Bounce();
 Bounce encButton = Bounce();
 
 Encoder encoder(encPins[0], encPins[1]);
@@ -186,8 +147,18 @@ float totalAverage;
 int readIndex = 0;
 
 void initializingStuff() {
+  pinMode(ampPin, OUTPUT);
+  digitalWrite(ampPin, LOW); // turn on the amplifier
 
   Serial.begin(115200);
+
+  //set up push buttons
+  //pinMode(audioSwitchPin, INPUT_PULLUP);
+  //audioSwitch.attach(audioSwitchPin);
+  //audioSwitch.interval(DEBOUNCEINTERVAL);
+  pinMode(encPins[2], INPUT_PULLUP);
+  encButton.attach(encPins[2]);
+  encButton.interval(DEBOUNCEINTERVAL);
 
   AudioMemory(15);//increase if the are glitches
 
@@ -236,10 +207,7 @@ void initializingStuff() {
 
 
   dac1.analogReference(EXTERNAL);//EXTERNAL is louder, but actually to loud
-  delay(50);             // time for DAC voltage stable
-  pinMode(5, OUTPUT);
-  digitalWrite(5, HIGH); // turn on the amplifier
-  delay(10);
+  // time for DAC voltage stable
 
   FastLED.addLeds<LED_TYPE, LEDPIN0, COLOR_ORDER>(leds, 0, 1);
   FastLED.addLeds<LED_TYPE, LEDPIN1, COLOR_ORDER>(leds, 1, 1);
@@ -258,17 +226,11 @@ void initializingStuff() {
   //digitalWrite(13, HIGH);
 
 
-
-  //set up push buttons
-  pinMode(audioSwitchPin, INPUT_PULLUP);
-  audioSwitch.attach(audioSwitchPin);
-  audioSwitch.interval(DEBOUNCEINTERVAL);
-  pinMode(encPins[2], INPUT_PULLUP);
-  encButton.attach(encPins[2]);
-  encButton.interval(DEBOUNCEINTERVAL);
-
-
-
+  if (digitalRead(encPins[2])) {
+    delay(50);
+    pinMode(ampPin, INPUT);
+    delay(50);
+  };
 
 
   amp1.gain(1.0);
