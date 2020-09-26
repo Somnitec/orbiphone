@@ -37,6 +37,19 @@ void setFrequencies() {
   osc9.frequency(freq[9]);
   osc10.frequency(freq[10]);
 
+  filter0.frequency(freq[0]);
+  filter1.frequency(freq[1]);
+  filter2.frequency(freq[2]);
+  filter3.frequency(freq[3]);
+  filter4.frequency(freq[4]);
+  filter5.frequency(freq[5]);
+  filter6.frequency(freq[6]);
+  filter7.frequency(freq[7]);
+  filter8.frequency(freq[8]);
+  filter9.frequency(freq[9]);
+  filter10.frequency(freq[10]);
+  filter11.frequency(freq[11]);
+
   subosc0.frequency(freq[0] / 2);
   subosc1.frequency(freq[1] / 2);
   subosc2.frequency(freq[2] / 2);
