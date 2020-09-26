@@ -21,7 +21,7 @@ void audioUpdate() {
 
 void setFrequencies() {
   for (int i = 0; i < TONESAMOUNT; i++) {
-    freq[i] = (freq[i] * glide + toneSet[(abs(encoder.read()) / 4)%toneSets][i] * 2) / (1 + glide);
+    freq[i] = (freq[i] * glide + toneSet[(abs(encoder.read()) / 4) % toneSets][i] * 2) / (1 + glide);
   }
 
   osc0.frequency(freq[0]);
@@ -35,6 +35,18 @@ void setFrequencies() {
   osc8.frequency(freq[8]);
   osc9.frequency(freq[9]);
   osc10.frequency(freq[10]);
+
+  subosc0.frequency(freq[0] / 2);
+  subosc1.frequency(freq[1] / 2);
+  subosc2.frequency(freq[2] / 2);
+  subosc3.frequency(freq[3] / 2);
+  subosc4.frequency(freq[4] / 2);
+  subosc5.frequency(freq[5] / 2);
+  subosc6.frequency(freq[6] / 2);
+  subosc7.frequency(freq[7] / 2);
+  subosc8.frequency(freq[8] / 2);
+  subosc9.frequency(freq[9] / 2);
+  subosc10.frequency(freq[10] / 2);
 }
 
 void setAmplitudes() {
@@ -81,5 +93,17 @@ void setAmplitudes() {
   mixer3.gain(0, sineMaxAmplitude * ampl[8]);
   mixer3.gain(1, sineMaxAmplitude * ampl[9]);
   mixer3.gain(2, sineMaxAmplitude * ampl[10]);
+
+  mixer1sub.gain(0, sineMaxAmplitude * ampl[0]);
+  mixer1sub.gain(1, sineMaxAmplitude * ampl[1]);
+  mixer1sub.gain(2, sineMaxAmplitude * ampl[2]);
+  mixer1sub.gain(3, sineMaxAmplitude * ampl[3]);
+  mixer2sub.gain(0, sineMaxAmplitude * ampl[4]);
+  mixer2sub.gain(1, sineMaxAmplitude * ampl[5]);
+  mixer2sub.gain(2, sineMaxAmplitude * ampl[6]);
+  mixer2sub.gain(3, sineMaxAmplitude * ampl[7]);
+  mixer3sub.gain(0, sineMaxAmplitude * ampl[8]);
+  mixer3sub.gain(1, sineMaxAmplitude * ampl[9]);
+  mixer3sub.gain(2, sineMaxAmplitude * ampl[10]);
 
 }
