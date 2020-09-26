@@ -117,7 +117,7 @@ const int volumePin = 34;
 //Bounce audioSwitch = Bounce();
 Bounce encButton = Bounce();
 
-Encoder encoder(encPins[0], encPins[1]);
+Encoder encoder(encPins[1], encPins[0]);
 
 
 int valueArray[11][6] = {//pin, lowcal,highcal,average,range,frequency
@@ -159,6 +159,8 @@ void initializingStuff() {
   pinMode(encPins[2], INPUT_PULLUP);
   encButton.attach(encPins[2]);
   encButton.interval(DEBOUNCEINTERVAL);
+
+  encoder.write(1000);
 
   AudioMemory(15);//increase if the are glitches
 

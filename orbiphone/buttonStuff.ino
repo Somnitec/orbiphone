@@ -12,8 +12,8 @@ void buttonUpdate() {
 
 
       if (abs(encClicks) % 4 == 0 ) {
-      float noteVol = 0.4;
-      osc0.begin(noteVol, 220, WAVEFORM_SINE);
+        float noteVol = 0.4;
+        osc0.begin(noteVol, 220, WAVEFORM_SINE);
         osc1.begin(noteVol, 220, WAVEFORM_SINE);
         osc2.begin(noteVol, 220, WAVEFORM_SINE);
         osc3.begin(noteVol, 220, WAVEFORM_SINE);
@@ -25,8 +25,8 @@ void buttonUpdate() {
         osc9.begin(noteVol, 220, WAVEFORM_SINE);
         osc10.begin(noteVol, 220, WAVEFORM_SINE);
       } else if ((abs(encClicks)) % 4 == 1 ) {
-      float noteVol = 0.3;
-      osc0.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+        float noteVol = 0.3;
+        osc0.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         osc1.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         osc2.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         osc3.begin(noteVol, 220, WAVEFORM_TRIANGLE);
@@ -38,8 +38,8 @@ void buttonUpdate() {
         osc9.begin(noteVol, 220, WAVEFORM_TRIANGLE);
         osc10.begin(noteVol, 220, WAVEFORM_TRIANGLE);
       } else if ((abs(encClicks) ) % 4 == 2 ) {
-      float noteVol = 0.2;
-      osc0.begin(noteVol, 220, WAVEFORM_SQUARE);
+        float noteVol = 0.2;
+        osc0.begin(noteVol, 220, WAVEFORM_SQUARE);
         osc1.begin(noteVol, 220, WAVEFORM_SQUARE);
         osc2.begin(noteVol, 220, WAVEFORM_SQUARE);
         osc3.begin(noteVol, 220, WAVEFORM_SQUARE);
@@ -51,8 +51,8 @@ void buttonUpdate() {
         osc9.begin(noteVol, 220, WAVEFORM_SQUARE);
         osc10.begin(noteVol, 220, WAVEFORM_SQUARE);
       } else if ((abs(encClicks) ) % 4 == 3 ) {
-      float noteVol = 0.2;
-      osc0.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+        float noteVol = 0.2;
+        osc0.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
         osc1.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
         osc2.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
         osc3.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
@@ -68,12 +68,10 @@ void buttonUpdate() {
 
 
 
-    long newPosition = encoder.read();
-    if (newPosition != oldPosition) {
-      oldPosition = newPosition;
-
-
-    }
+    //    long newPosition = encoder.read();
+    //    if (newPosition != oldPosition) {
+    //      oldPosition = newPosition;
+    //    }
 
     //
     //    button1.update();
