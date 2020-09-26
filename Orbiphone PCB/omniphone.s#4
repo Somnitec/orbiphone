@@ -247,8 +247,6 @@
 <wire x1="23.876" y1="0" x2="23.876" y2="-16.002" width="0.127" layer="21"/>
 <wire x1="23.876" y1="-16.002" x2="0" y2="-16.002" width="0.127" layer="21"/>
 <wire x1="0" y1="-16.002" x2="0" y2="0" width="0.127" layer="21"/>
-<hole x="1.905" y="-14.478" drill="2"/>
-<hole x="22.225" y="-14.478" drill="2"/>
 <text x="3.81" y="-6.35" size="1.27" layer="21">&gt;NAME</text>
 <text x="3.81" y="-8.89" size="1.27" layer="21">&gt;VALUE</text>
 </package>
@@ -14987,8 +14985,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C4" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="CPOL-US" device="E2-4" package3d_urn="urn:adsk.eagle:package:6240495/1" value="0.1uF"/>
 <part name="A13" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="PINHD-1X1" device="" package3d_urn="urn:adsk.eagle:package:6240654/1"/>
 <part name="A12" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="PINHD-1X1" device="" package3d_urn="urn:adsk.eagle:package:6240654/1"/>
-<part name="30/SDA1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="PINHD-1X1" device="" package3d_urn="urn:adsk.eagle:package:6240654/1"/>
-<part name="29/SCL1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="PINHD-1X1" device="" package3d_urn="urn:adsk.eagle:package:6240654/1"/>
+<part name="30" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="PINHD-1X1" device="" package3d_urn="urn:adsk.eagle:package:6240654/1"/>
+<part name="29" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="PINHD-1X1" device="" package3d_urn="urn:adsk.eagle:package:6240654/1"/>
 </parts>
 <sheets>
 <sheet>
@@ -15161,11 +15159,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="NAME" x="113.03" y="43.815" size="1.778" layer="95"/>
 <attribute name="VALUE" x="113.03" y="35.56" size="1.778" layer="96"/>
 </instance>
-<instance part="30/SDA1" gate="G$1" x="119.38" y="30.48" smashed="yes">
+<instance part="30" gate="G$1" x="119.38" y="30.48" smashed="yes">
 <attribute name="NAME" x="113.03" y="33.655" size="1.778" layer="95"/>
 <attribute name="VALUE" x="113.03" y="25.4" size="1.778" layer="96"/>
 </instance>
-<instance part="29/SCL1" gate="G$1" x="119.38" y="20.32" smashed="yes">
+<instance part="29" gate="G$1" x="119.38" y="20.32" smashed="yes">
 <attribute name="NAME" x="113.03" y="23.495" size="1.778" layer="95"/>
 <attribute name="VALUE" x="113.03" y="15.24" size="1.778" layer="96"/>
 </instance>
@@ -16020,7 +16018,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <pinref part="TEENSY3.2" gate="G$1" pin="30/A19/SDA1"/>
 <wire x1="86.36" y1="40.64" x2="101.6" y2="40.64" width="0.1524" layer="91"/>
-<pinref part="30/SDA1" gate="G$1" pin="1"/>
+<pinref part="30" gate="G$1" pin="1"/>
 <wire x1="101.6" y1="40.64" x2="101.6" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="30.48" x2="116.84" y2="30.48" width="0.1524" layer="91"/>
 </segment>
@@ -16029,7 +16027,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <pinref part="TEENSY3.2" gate="G$1" pin="29/A18/SCL1"/>
 <wire x1="86.36" y1="38.1" x2="99.06" y2="38.1" width="0.1524" layer="91"/>
-<pinref part="29/SCL1" gate="G$1" pin="1"/>
+<pinref part="29" gate="G$1" pin="1"/>
 <wire x1="99.06" y1="38.1" x2="99.06" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="20.32" x2="116.84" y2="20.32" width="0.1524" layer="91"/>
 </segment>
