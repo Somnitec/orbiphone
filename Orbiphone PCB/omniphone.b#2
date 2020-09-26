@@ -1027,6 +1027,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="20.316509375" y="33.670084375" size="0.8128" layer="25" ratio="10" rot="SR145"/>
 <attribute name="VALUE" x="21.21915" y="34.002665625" size="1.27" layer="27" rot="R145"/>
 </element>
+<element name="C5" library="adafruit" library_urn="urn:adsk.eagle:library:420" package="E2-4" package3d_urn="urn:adsk.eagle:package:6240495/1" value="22uF" x="-43.18" y="-48.26" smashed="yes">
+<attribute name="NAME" x="-41.021" y="-47.371" size="1.27" layer="25" ratio="10"/>
+<attribute name="VALUE" x="-41.021" y="-50.419" size="1.27" layer="27" ratio="10"/>
+</element>
 </elements>
 <signals>
 <signal name="3.3V">
@@ -1204,6 +1208,8 @@ design rules under a new name.</description>
 <wire x1="5" y1="-32.5" x2="5" y2="-33" width="0.254" layer="1"/>
 <wire x1="5.5" y1="-32.5" x2="5" y2="-32.5" width="0.254" layer="16"/>
 <via x="5" y="-32.5" extent="1-16" drill="0.35"/>
+<contactref element="C5" pad="-"/>
+<wire x1="-23.707640625" y1="-28.29871875" x2="-42.164" y2="-48.26" width="0" layer="19" extent="1-1"/>
 <wire x1="-24.384" y1="-23.749" x2="-23.707640625" y2="-28.29871875" width="0" layer="19" extent="1-1"/>
 <wire x1="-21.717" y1="-21.209" x2="-24.384" y2="-23.749" width="0" layer="19" extent="1-1"/>
 <wire x1="-22.352" y1="-19.431" x2="-21.717" y2="-21.209" width="0" layer="19" extent="1-1"/>
@@ -2355,6 +2361,8 @@ design rules under a new name.</description>
 <wire x1="8.5" y1="-29" x2="8.5" y2="-35" width="0.254" layer="1"/>
 <wire x1="9.5" y1="-28" x2="8.5" y2="-29" width="0.254" layer="1"/>
 <wire x1="8.5" y1="-35" x2="8.330171875" y2="-35.414953125" width="0.254" layer="1"/>
+<contactref element="C5" pad="+"/>
+<wire x1="8.330171875" y1="-35.414953125" x2="-44.196" y2="-48.26" width="0" layer="19" extent="1-1"/>
 <wire x1="9.5" y1="-27.5" x2="9.5" y2="-28" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="AUDIODAC">

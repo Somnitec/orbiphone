@@ -14974,7 +14974,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="MONO-STEREO" library="SparkFun-Jumpers" library_urn="urn:adsk.eagle:library:528" deviceset="JUMPER-SMT_3_1-NC_TRACE" device="_SILK" package3d_urn="urn:adsk.eagle:package:39288/1"/>
 <part name="SPEAKERDAC" library="ArvidLibrary" deviceset="SPEAKERTERMINAL" device="-3.5MM" package3d_urn="urn:adsk.eagle:package:6240635/1"/>
 <part name="SPEAKERPWM" library="ArvidLibrary" deviceset="SPEAKERTERMINAL" device="-3.5MM" package3d_urn="urn:adsk.eagle:package:6240635/1"/>
-<part name="T/POWER" library="SparkFun-Jumpers" library_urn="urn:adsk.eagle:library:528" deviceset="JUMPER-SMT_3_1-NC_TRACE" device="_SILK" package3d_urn="urn:adsk.eagle:package:39288/1"/>
 <part name="BATTERY" library="ArvidLibrary" deviceset="SPEAKERTERMINAL" device="-3.5MM" package3d_urn="urn:adsk.eagle:package:6240635/1"/>
 <part name="JP1" library="Connector" library_urn="urn:adsk.eagle:library:16378166" deviceset="PINHD-2X4" device="" package3d_urn="urn:adsk.eagle:package:22461/2"/>
 <part name="JP2" library="Connector" library_urn="urn:adsk.eagle:library:16378166" deviceset="PINHD-2X4" device="" package3d_urn="urn:adsk.eagle:package:22461/2"/>
@@ -15118,9 +15117,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="SPEAKERDAC" gate="&gt;NAME" x="96.52" y="-35.56" smashed="yes"/>
 <instance part="SPEAKERPWM" gate="&gt;NAME" x="96.52" y="-48.26" smashed="yes"/>
-<instance part="T/POWER" gate="G$1" x="111.76" y="101.6" smashed="yes" rot="R180">
-<attribute name="NAME" x="109.22" y="101.219" size="1.778" layer="95" font="vector" rot="R180"/>
-</instance>
 <instance part="BATTERY" gate="&gt;NAME" x="86.36" y="-5.08" smashed="yes" rot="R180"/>
 <instance part="JP1" gate="A" x="17.78" y="137.16" smashed="yes">
 <attribute name="NAME" x="11.43" y="145.415" size="1.778" layer="95"/>
@@ -15722,9 +15718,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="101.6" y="-22.86" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="T/POWER" gate="G$1" pin="1"/>
-<wire x1="111.76" y1="96.52" x2="111.76" y2="93.98" width="0.1524" layer="91"/>
-<label x="104.14" y="93.98" size="1.778" layer="95"/>
+<pinref part="POT" gate="G$1" pin="2"/>
+<wire x1="137.16" y1="101.6" x2="116.84" y2="101.6" width="0.1524" layer="91"/>
+<label x="111.76" y="101.6" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="L+" class="0">
@@ -15809,13 +15805,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="TEENSY3.2" gate="G$1" pin="A10"/>
 <wire x1="86.36" y1="53.34" x2="88.9" y2="53.34" width="0.1524" layer="91"/>
 <label x="88.9" y="53.34" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="POTSWITCH" class="0">
-<segment>
-<pinref part="T/POWER" gate="G$1" pin="3"/>
-<wire x1="111.76" y1="106.68" x2="111.76" y2="109.22" width="0.1524" layer="91"/>
-<label x="104.14" y="106.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
@@ -15932,13 +15921,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="27.94" y1="-35.56" x2="45.72" y2="-35.56" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$4" class="0">
-<segment>
-<pinref part="POT" gate="G$1" pin="2"/>
-<pinref part="T/POWER" gate="G$1" pin="2"/>
-<wire x1="137.16" y1="101.6" x2="116.84" y2="101.6" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="BATSENSOR" class="0">
 <segment>
 <pinref part="TEENSY3.2" gate="G$1" pin="A11"/>
@@ -16017,6 +15999,12 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="SPEAKERDAC" gate="&gt;NAME" pin="-"/>
 <wire x1="91.44" y1="-33.02" x2="88.9" y2="-33.02" width="0.1524" layer="91"/>
 <label x="86.36" y="-33.02" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TOADD-BATCONNECTIONFORPOWERSWITCH" class="0">
+<segment>
+<wire x1="106.68" y1="106.68" x2="121.92" y2="106.68" width="0.1524" layer="91"/>
+<label x="101.6" y="106.68" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

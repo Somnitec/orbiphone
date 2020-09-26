@@ -15122,13 +15122,13 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="NAME" x="109.22" y="101.219" size="1.778" layer="95" font="vector" rot="R180"/>
 </instance>
 <instance part="BATTERY" gate="&gt;NAME" x="86.36" y="-5.08" smashed="yes" rot="R180"/>
-<instance part="JP1" gate="A" x="7.62" y="170.18" smashed="yes">
-<attribute name="NAME" x="1.27" y="178.435" size="1.778" layer="95"/>
-<attribute name="VALUE" x="1.27" y="162.56" size="1.778" layer="96"/>
+<instance part="JP1" gate="A" x="17.78" y="137.16" smashed="yes">
+<attribute name="NAME" x="11.43" y="145.415" size="1.778" layer="95"/>
+<attribute name="VALUE" x="11.43" y="129.54" size="1.778" layer="96"/>
 </instance>
-<instance part="JP2" gate="A" x="25.4" y="167.64" smashed="yes">
-<attribute name="NAME" x="19.05" y="175.895" size="1.778" layer="95"/>
-<attribute name="VALUE" x="19.05" y="160.02" size="1.778" layer="96"/>
+<instance part="JP2" gate="A" x="35.56" y="137.16" smashed="yes">
+<attribute name="NAME" x="29.21" y="145.415" size="1.778" layer="95"/>
+<attribute name="VALUE" x="29.21" y="129.54" size="1.778" layer="96"/>
 </instance>
 <instance part="R7" gate="G$1" x="91.44" y="7.62" smashed="yes">
 <attribute name="NAME" x="87.63" y="9.1186" size="1.778" layer="95"/>
@@ -15758,9 +15758,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="27.94" y="-27.94" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="TEENSY3.2" gate="G$1" pin="13/SCK/LED"/>
-<wire x1="40.64" y1="55.88" x2="38.1" y2="55.88" width="0.1524" layer="91"/>
-<label x="30.48" y="55.88" size="1.778" layer="95"/>
+<pinref part="TEENSY3.2" gate="G$1" pin="21/A7/PWM"/>
+<wire x1="40.64" y1="35.56" x2="38.1" y2="35.56" width="0.1524" layer="91"/>
+<label x="35.56" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ENC0" class="0">
@@ -15816,11 +15816,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="T/POWER" gate="G$1" pin="3"/>
 <wire x1="111.76" y1="106.68" x2="111.76" y2="109.22" width="0.1524" layer="91"/>
 <label x="104.14" y="106.68" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="TEENSY3.2" gate="G$1" pin="21/A7/PWM"/>
-<wire x1="40.64" y1="35.56" x2="38.1" y2="35.56" width="0.1524" layer="91"/>
-<label x="35.56" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
