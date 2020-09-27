@@ -21,7 +21,7 @@
 #define sensorReadFastUpdateTime 3//ms
 #define sensorReadSlowUpdateTime 10//ms
 #define knobsUpdateTime 30//ms
-#define audioUpdateTime 1//ms
+#define audioUpdateTime 10//ms
 #define serialPrintUpdateTime 20//ms
 #define midiUpdateTime 10//ms
 #define ledUpdateTime 1000/100 //Hz

@@ -9,8 +9,11 @@ void knobUpdate() {
     setTimbre();
   }
 
-  if (encoderState != encoder.read() / 4)freqStable = false;
-  encoderState = encoder.read() / 4;
+  if (encoderState != encoder.read() / 4) {
+
+    encoderState = encoder.read() / 4;
+    setFrequencies();
+  }
 
 }
 

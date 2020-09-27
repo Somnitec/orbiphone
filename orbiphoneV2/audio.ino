@@ -43,16 +43,11 @@ void startAudio() {
   amp1sub.gain(0);
 
   setFrequencies();
-  setAmplitudes();
 }
 
 void audioUpdate() {
-
-
-  setFrequencies();
   setAmplitudes();
-
-
+  setFilters();
 }
 
 void setFrequencies() {
@@ -65,7 +60,6 @@ void setFrequencies() {
     freq[i] = toneSet[abs(encoderState) % toneSets][i];
   }
 
-  //if (!freqStable) {
   osc0.frequency(freq[0]);
   osc1.frequency(freq[1]);
   osc2.frequency(freq[2]);
@@ -77,21 +71,8 @@ void setFrequencies() {
   osc8.frequency(freq[8]);
   osc9.frequency(freq[9]);
   osc10.frequency(freq[10]);
-  //}
-#define filterLowPos 2.5
-#define filterHighPos 4.
 
-  filter0.frequency(freq[0]*fmap(amplChange[0], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter1.frequency(freq[1]*fmap(amplChange[1], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter2.frequency(freq[2]*fmap(amplChange[2], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter3.frequency(freq[3]*fmap(amplChange[3], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter4.frequency(freq[4]*fmap(amplChange[4], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter5.frequency(freq[5]*fmap(amplChange[5], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter6.frequency(freq[6]*fmap(amplChange[6], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter7.frequency(freq[7]*fmap(amplChange[7], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter8.frequency(freq[8]*fmap(amplChange[8], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter9.frequency(freq[9]*fmap(amplChange[9], 0, standardDevRange, filterLowPos, filterHighPos));
-  filter10.frequency(freq[10]*fmap(amplChange[10], 0, standardDevRange, filterLowPos, filterHighPos));
+
 
 #define octDivide 2.
   subosc0.frequency(freq[0] / octDivide);
@@ -108,7 +89,7 @@ void setFrequencies() {
 }
 
 void setAmplitudes() {
-
+  AudioNoInterrupts();
   mixer1.gain(0, oscMaxAmplitude * max(0, ampl[0]));
   mixer1.gain(1, oscMaxAmplitude * max(0, ampl[1]));
   mixer1.gain(2, oscMaxAmplitude * max(0, ampl[2]));
@@ -132,7 +113,7 @@ void setAmplitudes() {
   mixer3sub.gain(0, oscMaxAmplitude * max(0, ampl[8]));
   mixer3sub.gain(1, oscMaxAmplitude * max(0, ampl[9]));
   mixer3sub.gain(2, oscMaxAmplitude * max(0, ampl[10]));
-
+  AudioInterrupts();
 }
 
 void setTimbre() {
@@ -189,4 +170,22 @@ void setTimbre() {
     osc9.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
     osc10.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
   }
+}
+
+void setFilters() {
+#define filterLowPos 2.5
+#define filterHighPos 4.
+AudioNoInterrupts();
+  filter0.frequency(freq[0]*fmap(amplChange[0], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter1.frequency(freq[1]*fmap(amplChange[1], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter2.frequency(freq[2]*fmap(amplChange[2], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter3.frequency(freq[3]*fmap(amplChange[3], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter4.frequency(freq[4]*fmap(amplChange[4], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter5.frequency(freq[5]*fmap(amplChange[5], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter6.frequency(freq[6]*fmap(amplChange[6], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter7.frequency(freq[7]*fmap(amplChange[7], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter8.frequency(freq[8]*fmap(amplChange[8], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter9.frequency(freq[9]*fmap(amplChange[9], 0, standardDevRange, filterLowPos, filterHighPos));
+  filter10.frequency(freq[10]*fmap(amplChange[10], 0, standardDevRange, filterLowPos, filterHighPos));
+  AudioInterrupts();
 }
