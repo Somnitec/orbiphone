@@ -6,7 +6,7 @@ float ampl[12];
 
 #define defaultRange 100
 
-#define autocalibTime 2000
+#define autocalibTime 8000
 
 #define datapointsFast 20
 #define datapointsSlow 50
@@ -173,15 +173,13 @@ float slopeSlow11 = 0;
 
 
 
-
+bool stable = false;
+long stableTimer = 0;
 
 void setup() {
   Serial.begin(9600);    // needed for arduino yun
 
-
   baseLineCalibration();
-
-
 }
 
 void loop()
@@ -217,11 +215,20 @@ void loop()
     Serial.print("\tslowSlopeSUM:");
     int slopeSum = slopeSlow0 + slopeSlow1 + slopeSlow2 + slopeSlow3 + slopeSlow4 + slopeSlow5 + slopeSlow6 + slopeSlow7 + slopeSlow8 + slopeSlow9 + slopeSlow10 + slopeSlow11;
     int stableRange = 5;
-    bool stable = false;
+    
     if (slopeSum < stableRange && slopeSum > -stableRange) {
-      stable = true;
-    }
-    Serial.print(stable);
+      if (stable == false){
+        stable = true;
+        stableTimer=millis();
+      } else {
+        if (millis()>stableTimer+autocalibTime){
+           baseLineCalibration();
+        }
+      }
+      
+    } else stable = false;
+    
+    //Serial.print(stableTimer);
 
     Serial.print("\tscaled0:");
     Serial.print( ampl[0]);
@@ -753,12 +760,13 @@ void baseLineCalibration() {
   xySlow11.clear();
   x2Slow11.clear();
   
-  for (int i = 0; i < datapointsFast + datapointsSlow; i++) {
+  for (int i = 0; i < max(datapointsFast,datapointsSlow); i++) {
     doSensorReadFast();
     doSensorReadSlow(defaultRange);
 
-    delay(10);
+    delay(1);
   }
+  Serial.println("recalibrated");
 }
 
 float fmap(float x, float in_min, float in_max, float out_min, float out_max)
