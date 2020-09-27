@@ -63,38 +63,67 @@ float sineMaxAmplitude = 1.0 / TONESAMOUNT + .41; //about one divided by the amo
 #define calibrationUpdateTime 5//in ms
 
 #define lowThreshold 15 //a value to reach before the thing gets triggered
-#define maxRange 250 //the maximum range of the sensors
+#define maxRange 100 //the maximum range of the sensors before they get played
 #define glide 10    //glide time for frequency change
 
 #define numReadings  10 // running average of the sensor values
 
-#define autoCalibTime 5000 //ms how long the values should be stable before autoCalib
+#define autoCalibTime 8000 //ms how long the values should be stable before autoCalib
 #define autoCalibRange 20 // how stable the values should be for the timer to start
-#define autoCalibSoundRange 0.02 //how much the volume should stay the same for recalibration
 
-#define numReadingsCal  10 // running average of the sensor values
-#define calibCycles 10 // it will average this amount of cycles when calibrating
+
+#define datapointsFast 20
+#define datapointsSlow 50
+
+#define sensorReadFastUpdateTime 3
+#define sensorReadSlowUpdateTime 30
+
+#define knobsUpdateTime 30
+#define audioUpdateTime 3
+#define serialPrintUpdateTime 50
+#define MidiUpdateTime 10
+#define LedUpdateTime 1000/100 //Hz
+
+#include <Metro.h>
+Metro sensorReadFast = Metro(sensorReadFastUpdateTime);
+Metro sensorReadSlow = Metro(sensorReadSlowUpdateTime);
+Metro knobsLoop = Metro(knobsUpdateTime);
+Metro audioLoop = Metro(audioUpdateTime);
+Metro serialPrintLoop = Metro(serialPrintUpdateTime);
+Metro midiLoop = Metro(MidiUpdateTime);
+Metro ledLoop = Metro(LedUpdateTime);
 
 #define midiUpdateTime 5//in ms
 
 int encClicks = 0;
 
+
+
+
 void setup() {
   initializingStuff();
 }
-bool firstTime = true;
+
 void loop() {
-
-  calibrationUpdate();
-  buttonUpdate();
-  audioUpdate();
-  ledUpdate();
-  debugUpdate();
-  midiUpdate();
-
-  if (firstTime) {
-    baselineCalibration();
-    firstTime = false;
+  if (sensorReadFast.check() == 1) {
+    doSensorReadFast();
   }
-
+  if (sensorReadSlow.check() == 1) {
+    doSensorReadSlow(0);
+  }
+  if (knobsLoop.check() == 1) {
+    buttonUpdate();
+  }
+  if (audioLoop.check() == 1) {
+    audioUpdate();
+  }
+  if (serialPrintLoop.check() == 1) {
+    debugUpdate();
+  }
+  if (midiLoop.check() == 1) {
+    midiUpdate();
+  }
+  if (ledLoop.check() == 1) {
+    ledUpdate();
+  }
 }

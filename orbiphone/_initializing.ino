@@ -2,6 +2,11 @@
 #include <FastLED.h>
 #include <Bounce2.h>
 
+#include "RunningAverage.h"
+#include <Encoder.h>
+
+
+
 #define LEDPIN0          2
 #define LEDPIN1          5
 #define LEDPIN2          6
@@ -128,9 +133,169 @@ AudioConnection          patchCord47(mixer4, amp1);
 AudioConnection          patchCord48(amp1, dac1);
 // GUItool: end automatically generated code
 
+// storage of "temporal window" of 50 data points:
+RunningAverage xFast0(datapointsFast);   // to store x data (time)
+RunningAverage yFast0(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast0(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast0(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow0(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow0(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow0(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow0(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast0 = 0;
+float slopeSlow0 = 0;
+
+RunningAverage xFast1(datapointsFast);   // to store x data (time)
+RunningAverage yFast1(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast1(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast1(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow1(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow1(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow1(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow1(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast1 = 0;
+float slopeSlow1 = 0;
+
+RunningAverage xFast2(datapointsFast);   // to store x data (time)
+RunningAverage yFast2(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast2(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast2(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow2(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow2(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow2(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow2(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast2 = 0;
+float slopeSlow2 = 0;
+
+RunningAverage xFast3(datapointsFast);   // to store x data (time)
+RunningAverage yFast3(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast3(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast3(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow3(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow3(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow3(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow3(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast3 = 0;
+float slopeSlow3 = 0;
+
+RunningAverage xFast4(datapointsFast);   // to store x data (time)
+RunningAverage yFast4(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast4(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast4(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow4(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow4(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow4(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow4(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast4 = 0;
+float slopeSlow4 = 0;
+
+RunningAverage xFast5(datapointsFast);   // to store x data (time)
+RunningAverage yFast5(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast5(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast5(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow5(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow5(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow5(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow5(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast5 = 0;
+float slopeSlow5 = 0;
+
+RunningAverage xFast6(datapointsFast);   // to store x data (time)
+RunningAverage yFast6(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast6(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast6(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow6(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow6(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow6(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow6(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast6 = 0;
+float slopeSlow6 = 0;
+
+RunningAverage xFast7(datapointsFast);   // to store x data (time)
+RunningAverage yFast7(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast7(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast7(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow7(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow7(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow7(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow7(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast7 = 0;
+float slopeSlow7 = 0;
+
+RunningAverage xFast8(datapointsFast);   // to store x data (time)
+RunningAverage yFast8(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast8(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast8(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow8(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow8(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow8(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow8(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast8 = 0;
+float slopeSlow8 = 0;
+
+RunningAverage xFast9(datapointsFast);   // to store x data (time)
+RunningAverage yFast9(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast9(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast9(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow9(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow9(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow9(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow9(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast9 = 0;
+float slopeSlow9 = 0;
+
+RunningAverage xFast10(datapointsFast);   // to store x data (time)
+RunningAverage yFast10(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast10(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast10(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow10(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow10(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow10(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow10(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast10 = 0;
+float slopeSlow10 = 0;
+
+RunningAverage xFast11(datapointsFast);   // to store x data (time)
+RunningAverage yFast11(datapointsFast);   // to store y data (analog sensor output)
+RunningAverage xyFast11(datapointsFast);  // to store x*y, needed for slope calculation
+RunningAverage x2Fast11(datapointsFast);  // to store x*x, needed for slope calculation
+
+RunningAverage xSlow11(datapointsSlow);   // to store x data (time)
+RunningAverage ySlow11(datapointsSlow);   // to store y data (analog sensor output)
+RunningAverage xySlow11(datapointsSlow);  // to store x*y, needed for slope calculation
+RunningAverage x2Slow11(datapointsSlow);  // to store x*x, needed for slope calculation
+
+float slopeFast11 = 0;
+float slopeSlow11 = 0;
 
 
-#include <Encoder.h>
+
+bool stable = false;
+long stableTimer = 0;
+
+
 
 
 const int encPins[] = {12, 11, 24};
@@ -169,6 +334,7 @@ int buttonState[4] = {0, 0, 0, 0};
 float totalAverage;
 
 int readIndex = 0;
+
 
 void initializingStuff() {
   pinMode(ampPin, OUTPUT);
