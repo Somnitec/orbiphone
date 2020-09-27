@@ -6,6 +6,8 @@ float ampl[12];
 
 #define defaultRange 100
 
+#define autocalibTime 2000
+
 #define datapointsFast 20
 #define datapointsSlow 50
 
