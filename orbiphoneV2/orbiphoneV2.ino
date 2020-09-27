@@ -317,7 +317,7 @@ RunningAverage bufferSlow10(datapointsSlow);
 RunningAverage bufferFast11(datapointsFast);
 RunningAverage bufferSlow11(datapointsSlow);
 
-int encClicks = 0;
+int encClicks = 2;
 int encoderState=0;
 bool freqStable = false;
 

@@ -60,6 +60,44 @@ void setFrequencies() {
   subosc8.frequency(freq[8] / octDivide);
   subosc9.frequency(freq[9] / octDivide);
   subosc10.frequency(freq[10] / octDivide);
+
+
+  filter0.frequency(freq[0]);
+  filter1.frequency(freq[1]);
+  filter2.frequency(freq[2]);
+  filter3.frequency(freq[3]);
+  filter4.frequency(freq[4]);
+  filter5.frequency(freq[5]);
+  filter6.frequency(freq[6]);
+  filter7.frequency(freq[7]);
+  filter8.frequency(freq[8]);
+  filter9.frequency(freq[9]);
+  filter10.frequency(freq[10]);
+
+#define reso 1.5
+  filter0.resonance(reso);
+  filter1.resonance(reso);
+  filter2.resonance(reso);
+  filter3.resonance(reso);
+  filter4.resonance(reso);
+  filter5.resonance(reso);
+  filter6.resonance(reso);
+  filter7.resonance(reso);
+  filter8.resonance(reso);
+  filter9.resonance(reso);
+  filter10.resonance(reso);
+#define octaves 1.75
+  filter0.octaveControl(octaves);
+  filter1.octaveControl(octaves);
+  filter2.octaveControl(octaves);
+  filter3.octaveControl(octaves);
+  filter4.octaveControl(octaves);
+  filter5.octaveControl(octaves);
+  filter6.octaveControl(octaves);
+  filter7.octaveControl(octaves);
+  filter8.octaveControl(octaves);
+  filter9.octaveControl(octaves);
+  filter10.octaveControl(octaves);
   AudioInterrupts();
 }
 
@@ -85,7 +123,7 @@ void setAmplitudes() {
 void setTimbre() {
   AudioNoInterrupts();
   if (encClicks % 4 == 0 ) {
-    float noteVol = 1.;
+    float noteVol = .7;
     osc0.begin(noteVol, 220, WAVEFORM_SINE);
     osc1.begin(noteVol, 220, WAVEFORM_SINE);
     osc2.begin(noteVol, 220, WAVEFORM_SINE);
@@ -98,7 +136,7 @@ void setTimbre() {
     osc9.begin(noteVol, 220, WAVEFORM_SINE);
     osc10.begin(noteVol, 220, WAVEFORM_SINE);
   } else if (encClicks % 4 == 1 ) {
-    float noteVol = .9;
+    float noteVol = .6;
     osc0.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc1.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc2.begin(noteVol, 220, WAVEFORM_TRIANGLE);
@@ -111,7 +149,7 @@ void setTimbre() {
     osc9.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc10.begin(noteVol, 220, WAVEFORM_TRIANGLE);
   } else if (encClicks % 4 == 2 ) {
-    float noteVol = .5;
+    float noteVol = .4;
     osc0.begin(noteVol, 220, WAVEFORM_SQUARE);
     osc1.begin(noteVol, 220, WAVEFORM_SQUARE);
     osc2.begin(noteVol, 220, WAVEFORM_SQUARE);
@@ -124,7 +162,7 @@ void setTimbre() {
     osc9.begin(noteVol, 220, WAVEFORM_SQUARE);
     osc10.begin(noteVol, 220, WAVEFORM_SQUARE);
   } else if (encClicks % 4 == 3 ) {
-    float noteVol = .6;
+    float noteVol = .4;
     osc0.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
     osc1.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
     osc2.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
