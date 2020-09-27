@@ -2,6 +2,9 @@
 #include "RunningAverage.h"
 
 int sensor[12] = {0, 1, 25, 17, 16, 15, 32, 18, 33, 19, 22, 23};
+float ampl[12];
+
+#define defaultRange -10
 
 #define datapointsFast 20
 #define datapointsSlow 50
@@ -284,308 +287,79 @@ void setup() {
   xySlow11.clear();
   x2Slow11.clear();
 
-  //  // wait until window is full of data.
-  //  while (x2Slow11.getCount() < datapointsSlow || x2Fast11.getCount() < datapointsFast) {
-  //    readValues();
-  //  }
-  //  Serial.println("filled read buffer");
+  for (int i = 0; i < datapointsFast + datapointsSlow; i++) {
+    doSensorReadFast();
+    doSensorReadSlow(0);
+    delay(10);
+  }
+
 }
 
 void loop()
 {
   if (sensorReadFast.check() == 1) {
-    float yn = 0;
-    float xn = 0;
-    float xFastVal = 0;
-
-    yn = touchRead(sensor[0]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast0.addValue(yn);          // add y variable to storing array
-    xFast0.addValue(xn);          // add x variable to storing array
-    xyFast0.addValue(xn * yn); // same for x*y
-    x2Fast0.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast0.getAverage();
-    slopeFast0 = (xyFast0.getAverage() - (xFastVal * yFast0.getAverage())) / (x2Fast0.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[1]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast1.addValue(yn);          // add y variable to storing array
-    xFast1.addValue(xn);          // add x variable to storing array
-    xyFast1.addValue(xn * yn); // same for x*y
-    x2Fast1.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast1.getAverage();
-    slopeFast1 = (xyFast1.getAverage() - (xFastVal * yFast1.getAverage())) / (x2Fast1.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[2]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast2.addValue(yn);          // add y variable to storing array
-    xFast2.addValue(xn);          // add x variable to storing array
-    xyFast2.addValue(xn * yn); // same for x*y
-    x2Fast2.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast2.getAverage();
-    slopeFast2 = (xyFast2.getAverage() - (xFastVal * yFast2.getAverage())) / (x2Fast2.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[3]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast3.addValue(yn);          // add y variable to storing array
-    xFast3.addValue(xn);          // add x variable to storing array
-    xyFast3.addValue(xn * yn); // same for x*y
-    x2Fast3.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast3.getAverage();
-    slopeFast3 = (xyFast3.getAverage() - (xFastVal * yFast3.getAverage())) / (x2Fast3.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[4]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast4.addValue(yn);          // add y variable to storing array
-    xFast4.addValue(xn);          // add x variable to storing array
-    xyFast4.addValue(xn * yn); // same for x*y
-    x2Fast4.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast4.getAverage();
-    slopeFast4 = (xyFast4.getAverage() - (xFastVal * yFast4.getAverage())) / (x2Fast4.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[5]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast5.addValue(yn);          // add y variable to storing array
-    xFast5.addValue(xn);          // add x variable to storing array
-    xyFast5.addValue(xn * yn); // same for x*y
-    x2Fast5.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast5.getAverage();
-    slopeFast5 = (xyFast5.getAverage() - (xFastVal * yFast5.getAverage())) / (x2Fast5.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[6]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast6.addValue(yn);          // add y variable to storing array
-    xFast6.addValue(xn);          // add x variable to storing array
-    xyFast6.addValue(xn * yn); // same for x*y
-    x2Fast6.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast6.getAverage();
-    slopeFast6 = (xyFast6.getAverage() - (xFastVal * yFast6.getAverage())) / (x2Fast6.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[7]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast7.addValue(yn);          // add y variable to storing array
-    xFast7.addValue(xn);          // add x variable to storing array
-    xyFast7.addValue(xn * yn); // same for x*y
-    x2Fast7.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast7.getAverage();
-    slopeFast7 = (xyFast7.getAverage() - (xFastVal * yFast7.getAverage())) / (x2Fast7.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[8]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast8.addValue(yn);          // add y variable to storing array
-    xFast8.addValue(xn);          // add x variable to storing array
-    xyFast8.addValue(xn * yn); // same for x*y
-    x2Fast8.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast8.getAverage();
-    slopeFast8 = (xyFast8.getAverage() - (xFastVal * yFast8.getAverage())) / (x2Fast8.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[9]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast9.addValue(yn);          // add y variable to storing array
-    xFast9.addValue(xn);          // add x variable to storing array
-    xyFast9.addValue(xn * yn); // same for x*y
-    x2Fast9.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast9.getAverage();
-    slopeFast9 = (xyFast9.getAverage() - (xFastVal * yFast9.getAverage())) / (x2Fast9.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[10]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast10.addValue(yn);          // add y variable to storing array
-    xFast10.addValue(xn);          // add x variable to storing array
-    xyFast10.addValue(xn * yn); // same for x*y
-    x2Fast10.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast10.getAverage();
-    slopeFast10 = (xyFast10.getAverage() - (xFastVal * yFast10.getAverage())) / (x2Fast10.getAverage() - (xFastVal * xFastVal));
-
-    yn = touchRead(sensor[11]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    yFast11.addValue(yn);          // add y variable to storing array
-    xFast11.addValue(xn);          // add x variable to storing array
-    xyFast11.addValue(xn * yn); // same for x*y
-    x2Fast11.addValue(xn * xn); // same for x*x
-    // Slope equation (simple regression):
-    xFastVal = xFast11.getAverage();
-    slopeFast11 = (xyFast11.getAverage() - (xFastVal * yFast11.getAverage())) / (x2Fast11.getAverage() - (xFastVal * xFastVal));
-
-
+    doSensorReadFast();
   }
   if (sensorReadSlow.check() == 1) {
-    float yn = 0;
-    float xn = 0;
-    float xvalSlow = 0;
-
-    yn = touchRead(sensor[0]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow0.addValue(yn);          // add y variable to storing array
-    xSlow0.addValue(xn);          // add x variable to storing array
-    xySlow0.addValue(xn * yn); // same for x*y
-    x2Slow0.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow0.getAverage();
-    slopeSlow0 = (xySlow0.getAverage() - (xvalSlow * ySlow0.getAverage())) / (x2Slow0.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[1]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow1.addValue(yn);          // add y variable to storing array
-    xSlow1.addValue(xn);          // add x variable to storing array
-    xySlow1.addValue(xn * yn); // same for x*y
-    x2Slow1.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow1.getAverage();
-    slopeSlow1 = (xySlow1.getAverage() - (xvalSlow * ySlow1.getAverage())) / (x2Slow1.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[2]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow2.addValue(yn);          // add y variable to storing array
-    xSlow2.addValue(xn);          // add x variable to storing array
-    xySlow2.addValue(xn * yn); // same for x*y
-    x2Slow2.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow2.getAverage();
-    slopeSlow2 = (xySlow2.getAverage() - (xvalSlow * ySlow2.getAverage())) / (x2Slow2.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[3]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow3.addValue(yn);          // add y variable to storing array
-    xSlow3.addValue(xn);          // add x variable to storing array
-    xySlow3.addValue(xn * yn); // same for x*y
-    x2Slow3.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow3.getAverage();
-    slopeSlow3 = (xySlow3.getAverage() - (xvalSlow * ySlow3.getAverage())) / (x2Slow3.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[4]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow4.addValue(yn);          // add y variable to storing array
-    xSlow4.addValue(xn);          // add x variable to storing array
-    xySlow4.addValue(xn * yn); // same for x*y
-    x2Slow4.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow4.getAverage();
-    slopeSlow4 = (xySlow4.getAverage() - (xvalSlow * ySlow4.getAverage())) / (x2Slow4.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[5]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow5.addValue(yn);          // add y variable to storing array
-    xSlow5.addValue(xn);          // add x variable to storing array
-    xySlow5.addValue(xn * yn); // same for x*y
-    x2Slow5.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow5.getAverage();
-    slopeSlow5 = (xySlow5.getAverage() - (xvalSlow * ySlow5.getAverage())) / (x2Slow5.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[6]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow6.addValue(yn);          // add y variable to storing array
-    xSlow6.addValue(xn);          // add x variable to storing array
-    xySlow6.addValue(xn * yn); // same for x*y
-    x2Slow6.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow6.getAverage();
-    slopeSlow6 = (xySlow6.getAverage() - (xvalSlow * ySlow6.getAverage())) / (x2Slow6.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[7]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow7.addValue(yn);          // add y variable to storing array
-    xSlow7.addValue(xn);          // add x variable to storing array
-    xySlow7.addValue(xn * yn); // same for x*y
-    x2Slow7.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow7.getAverage();
-    slopeSlow7 = (xySlow7.getAverage() - (xvalSlow * ySlow7.getAverage())) / (x2Slow7.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[8]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow8.addValue(yn);          // add y variable to storing array
-    xSlow8.addValue(xn);          // add x variable to storing array
-    xySlow8.addValue(xn * yn); // same for x*y
-    x2Slow8.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow8.getAverage();
-    slopeSlow8 = (xySlow8.getAverage() - (xvalSlow * ySlow8.getAverage())) / (x2Slow8.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[9]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow9.addValue(yn);          // add y variable to storing array
-    xSlow9.addValue(xn);          // add x variable to storing array
-    xySlow9.addValue(xn * yn); // same for x*y
-    x2Slow9.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow9.getAverage();
-    slopeSlow9 = (xySlow9.getAverage() - (xvalSlow * ySlow9.getAverage())) / (x2Slow9.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[10]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow10.addValue(yn);          // add y variable to storing array
-    xSlow10.addValue(xn);          // add x variable to storing array
-    xySlow10.addValue(xn * yn); // same for x*y
-    x2Slow10.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow10.getAverage();
-    slopeSlow10 = (xySlow10.getAverage() - (xvalSlow * ySlow10.getAverage())) / (x2Slow10.getAverage() - (xvalSlow * xvalSlow));
-
-    yn = touchRead(sensor[11]) ;  // individual sensor lecture (y variable)
-    xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
-    ySlow11.addValue(yn);          // add y variable to storing array
-    xSlow11.addValue(xn);          // add x variable to storing array
-    xySlow11.addValue(xn * yn); // same for x*y
-    x2Slow11.addValue(xn * xn); // same for x*x
-    xvalSlow = xSlow11.getAverage();
-    slopeSlow11 = (xySlow11.getAverage() - (xvalSlow * ySlow11.getAverage())) / (x2Slow11.getAverage() - (xvalSlow * xvalSlow));
-
-
-
-
+    doSensorReadSlow(0);
   }
   if (printUpdateTime.check() == 1) {
-//    Serial.print("\tSlopeFast0:");
-//    Serial.print(slopeFast0 , 4); // shows slope value (sensor units / second)
-//    Serial.print("\tSlopeSlow0:");
-//    Serial.print(slopeSlow0 , 4); // shows slope value (sensor units / second)
+    //    Serial.print("\tSlopeFast0:");
+    //    Serial.print(slopeFast0 , 4); // shows slope value (sensor units / second)
+    //    Serial.print("\tSlopeSlow0:");
+    //    Serial.print(slopeSlow0 , 4); // shows slope value (sensor units / second)
     //    Serial.print("\tRawVal0:");
     //    Serial.print(touchRead(sensor[0]));
-    //    Serial.print("\tavgVal0:");
-    //    Serial.print(yFast0.getAverage());
+        Serial.print("\tavgVal0:");
+        Serial.print(yFast0.getAverage());
+         Serial.print("\tStandardError0:");
+        Serial.print(yFast0.getStandardError());
+        Serial.print("\tStandardDeviation0:");
+        Serial.print(yFast0.getStandardDeviation());
+                 Serial.print("\tslStandardError0:");
+        Serial.print(ySlow0.getStandardError());
+        Serial.print("\tslStandardDeviation0:");
+        Serial.print(ySlow0.getStandardDeviation());
     //    Serial.print("\tbottom0:");
     //    Serial.print(ySlow0.getMin());
     //    Serial.print("\ttop:");
     //    Serial.print(ySlow0.getMax());
-    
-    Serial.print("\tscaled0:");
-    Serial.print( fmap(touchRead(sensor[0]), ySlow0.getMin(), ySlow0.getMax() + 1, 0., 1.));
 
-    Serial.print("\tscaled1:");
-    Serial.print(fmap(touchRead(sensor[1]), ySlow1.getMin(), ySlow1.getMax() + 1, 0., 1.));
+//    Serial.print("\tscaled0:");
+//    Serial.print( ampl[0]);
 
-   Serial.print("\tscaled2:");
-    Serial.print( fmap(touchRead(sensor[2]), ySlow2.getMin(), ySlow2.getMax() + 1, 0., 1.));
-
-    Serial.print("\tscaled3:");
-    Serial.print(fmap(touchRead(sensor[3]), ySlow3.getMin(), ySlow3.getMax() + 1, 0., 1.));
-
-   Serial.print("\tscaled4:");
-    Serial.print( fmap(touchRead(sensor[4]), ySlow4.getMin(), ySlow4.getMax() + 1, 0., 1.));
-
-    Serial.print("\tscaled5:");
-    Serial.print(fmap(touchRead(sensor[5]), ySlow5.getMin(), ySlow5.getMax() + 1, 0., 1.));
-
-   Serial.print("\tscaled6:");
-    Serial.print( fmap(touchRead(sensor[6]), ySlow6.getMin(), ySlow6.getMax() + 1, 0., 1.));
-
-    Serial.print("\tscaled7:");
-    Serial.print(fmap(touchRead(sensor[7]), ySlow7.getMin(), ySlow7.getMax() + 1, 0., 1.));
-
-   Serial.print("\tscaled8:");
-    Serial.print( fmap(touchRead(sensor[8]), ySlow8.getMin(), ySlow8.getMax() + 1, 0., 1.));
-
-    Serial.print("\tscaled9:");
-    Serial.print(fmap(touchRead(sensor[9]), ySlow9.getMin(), ySlow9.getMax() + 1, 0., 1.));
-
-   Serial.print("\tscaled10:");
-    Serial.print( fmap(touchRead(sensor[10]), ySlow10.getMin(), ySlow10.getMax() + 1, 0., 1.));
-
-    Serial.print("\tscaled11:");
-    Serial.print(fmap(touchRead(sensor[11]), ySlow11.getMin(), ySlow11.getMax() + 1, 0., 1.));
+//    Serial.print("\tscaled1:");
+//    Serial.print(fmap(touchRead(sensor[1]), ySlow1.getMin(), ySlow1.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled2:");
+//    Serial.print( fmap(touchRead(sensor[2]), ySlow2.getMin(), ySlow2.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled3:");
+//    Serial.print(fmap(touchRead(sensor[3]), ySlow3.getMin(), ySlow3.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled4:");
+//    Serial.print( fmap(touchRead(sensor[4]), ySlow4.getMin(), ySlow4.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled5:");
+//    Serial.print(fmap(touchRead(sensor[5]), ySlow5.getMin(), ySlow5.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled6:");
+//    Serial.print( fmap(touchRead(sensor[6]), ySlow6.getMin(), ySlow6.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled7:");
+//    Serial.print(fmap(touchRead(sensor[7]), ySlow7.getMin(), ySlow7.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled8:");
+//    Serial.print( fmap(touchRead(sensor[8]), ySlow8.getMin(), ySlow8.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled9:");
+//    Serial.print(fmap(touchRead(sensor[9]), ySlow9.getMin(), ySlow9.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled10:");
+//    Serial.print( fmap(touchRead(sensor[10]), ySlow10.getMin(), ySlow10.getMax() + 1, 0., 1.));
+//
+//    Serial.print("\tscaled11:");
+//    Serial.print(fmap(touchRead(sensor[11]), ySlow11.getMin(), ySlow11.getMax() + 1, 0., 1.));
 
 
 
@@ -692,6 +466,251 @@ void loop()
     */
     Serial.println();
   }
+}
+
+void doSensorReadFast() {
+  float yn = 0;
+  float xn = 0;
+  float xFastVal = 0;
+
+  yn = touchRead(sensor[0]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast0.addValue(yn);          // add y variable to storing array
+  xFast0.addValue(xn);          // add x variable to storing array
+  xyFast0.addValue(xn * yn); // same for x*y
+  x2Fast0.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast0.getAverage();
+  slopeFast0 = (xyFast0.getAverage() - (xFastVal * yFast0.getAverage())) / (x2Fast0.getAverage() - (xFastVal * xFastVal));
+  ampl[0] = fmap(touchRead(sensor[0]), ySlow0.getMin(), ySlow0.getMax() + 1, 0., 1.);
+
+  yn = touchRead(sensor[1]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast1.addValue(yn);          // add y variable to storing array
+  xFast1.addValue(xn);          // add x variable to storing array
+  xyFast1.addValue(xn * yn); // same for x*y
+  x2Fast1.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast1.getAverage();
+  slopeFast1 = (xyFast1.getAverage() - (xFastVal * yFast1.getAverage())) / (x2Fast1.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[2]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast2.addValue(yn);          // add y variable to storing array
+  xFast2.addValue(xn);          // add x variable to storing array
+  xyFast2.addValue(xn * yn); // same for x*y
+  x2Fast2.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast2.getAverage();
+  slopeFast2 = (xyFast2.getAverage() - (xFastVal * yFast2.getAverage())) / (x2Fast2.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[3]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast3.addValue(yn);          // add y variable to storing array
+  xFast3.addValue(xn);          // add x variable to storing array
+  xyFast3.addValue(xn * yn); // same for x*y
+  x2Fast3.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast3.getAverage();
+  slopeFast3 = (xyFast3.getAverage() - (xFastVal * yFast3.getAverage())) / (x2Fast3.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[4]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast4.addValue(yn);          // add y variable to storing array
+  xFast4.addValue(xn);          // add x variable to storing array
+  xyFast4.addValue(xn * yn); // same for x*y
+  x2Fast4.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast4.getAverage();
+  slopeFast4 = (xyFast4.getAverage() - (xFastVal * yFast4.getAverage())) / (x2Fast4.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[5]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast5.addValue(yn);          // add y variable to storing array
+  xFast5.addValue(xn);          // add x variable to storing array
+  xyFast5.addValue(xn * yn); // same for x*y
+  x2Fast5.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast5.getAverage();
+  slopeFast5 = (xyFast5.getAverage() - (xFastVal * yFast5.getAverage())) / (x2Fast5.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[6]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast6.addValue(yn);          // add y variable to storing array
+  xFast6.addValue(xn);          // add x variable to storing array
+  xyFast6.addValue(xn * yn); // same for x*y
+  x2Fast6.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast6.getAverage();
+  slopeFast6 = (xyFast6.getAverage() - (xFastVal * yFast6.getAverage())) / (x2Fast6.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[7]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast7.addValue(yn);          // add y variable to storing array
+  xFast7.addValue(xn);          // add x variable to storing array
+  xyFast7.addValue(xn * yn); // same for x*y
+  x2Fast7.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast7.getAverage();
+  slopeFast7 = (xyFast7.getAverage() - (xFastVal * yFast7.getAverage())) / (x2Fast7.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[8]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast8.addValue(yn);          // add y variable to storing array
+  xFast8.addValue(xn);          // add x variable to storing array
+  xyFast8.addValue(xn * yn); // same for x*y
+  x2Fast8.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast8.getAverage();
+  slopeFast8 = (xyFast8.getAverage() - (xFastVal * yFast8.getAverage())) / (x2Fast8.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[9]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast9.addValue(yn);          // add y variable to storing array
+  xFast9.addValue(xn);          // add x variable to storing array
+  xyFast9.addValue(xn * yn); // same for x*y
+  x2Fast9.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast9.getAverage();
+  slopeFast9 = (xyFast9.getAverage() - (xFastVal * yFast9.getAverage())) / (x2Fast9.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[10]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast10.addValue(yn);          // add y variable to storing array
+  xFast10.addValue(xn);          // add x variable to storing array
+  xyFast10.addValue(xn * yn); // same for x*y
+  x2Fast10.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast10.getAverage();
+  slopeFast10 = (xyFast10.getAverage() - (xFastVal * yFast10.getAverage())) / (x2Fast10.getAverage() - (xFastVal * xFastVal));
+
+  yn = touchRead(sensor[11]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  yFast11.addValue(yn);          // add y variable to storing array
+  xFast11.addValue(xn);          // add x variable to storing array
+  xyFast11.addValue(xn * yn); // same for x*y
+  x2Fast11.addValue(xn * xn); // same for x*x
+  // Slope equation (simple regression):
+  xFastVal = xFast11.getAverage();
+  slopeFast11 = (xyFast11.getAverage() - (xFastVal * yFast11.getAverage())) / (x2Fast11.getAverage() - (xFastVal * xFastVal));
+
+}
+
+void doSensorReadSlow(float mod) {
+
+  float yn = 0;
+  float xn = 0;
+  float xvalSlow = 0;
+
+  yn = touchRead(mod+sensor[0]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow0.addValue(yn);          // add y variable to storing array
+  xSlow0.addValue(xn);          // add x variable to storing array
+  xySlow0.addValue(xn * yn); // same for x*y
+  x2Slow0.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow0.getAverage();
+  slopeSlow0 = (xySlow0.getAverage() - (xvalSlow * ySlow0.getAverage())) / (x2Slow0.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[1]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow1.addValue(yn);          // add y variable to storing array
+  xSlow1.addValue(xn);          // add x variable to storing array
+  xySlow1.addValue(xn * yn); // same for x*y
+  x2Slow1.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow1.getAverage();
+  slopeSlow1 = (xySlow1.getAverage() - (xvalSlow * ySlow1.getAverage())) / (x2Slow1.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[2]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow2.addValue(yn);          // add y variable to storing array
+  xSlow2.addValue(xn);          // add x variable to storing array
+  xySlow2.addValue(xn * yn); // same for x*y
+  x2Slow2.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow2.getAverage();
+  slopeSlow2 = (xySlow2.getAverage() - (xvalSlow * ySlow2.getAverage())) / (x2Slow2.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[3]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow3.addValue(yn);          // add y variable to storing array
+  xSlow3.addValue(xn);          // add x variable to storing array
+  xySlow3.addValue(xn * yn); // same for x*y
+  x2Slow3.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow3.getAverage();
+  slopeSlow3 = (xySlow3.getAverage() - (xvalSlow * ySlow3.getAverage())) / (x2Slow3.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[4]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow4.addValue(yn);          // add y variable to storing array
+  xSlow4.addValue(xn);          // add x variable to storing array
+  xySlow4.addValue(xn * yn); // same for x*y
+  x2Slow4.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow4.getAverage();
+  slopeSlow4 = (xySlow4.getAverage() - (xvalSlow * ySlow4.getAverage())) / (x2Slow4.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[5]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow5.addValue(yn);          // add y variable to storing array
+  xSlow5.addValue(xn);          // add x variable to storing array
+  xySlow5.addValue(xn * yn); // same for x*y
+  x2Slow5.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow5.getAverage();
+  slopeSlow5 = (xySlow5.getAverage() - (xvalSlow * ySlow5.getAverage())) / (x2Slow5.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[6]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow6.addValue(yn);          // add y variable to storing array
+  xSlow6.addValue(xn);          // add x variable to storing array
+  xySlow6.addValue(xn * yn); // same for x*y
+  x2Slow6.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow6.getAverage();
+  slopeSlow6 = (xySlow6.getAverage() - (xvalSlow * ySlow6.getAverage())) / (x2Slow6.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[7]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow7.addValue(yn);          // add y variable to storing array
+  xSlow7.addValue(xn);          // add x variable to storing array
+  xySlow7.addValue(xn * yn); // same for x*y
+  x2Slow7.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow7.getAverage();
+  slopeSlow7 = (xySlow7.getAverage() - (xvalSlow * ySlow7.getAverage())) / (x2Slow7.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[8]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow8.addValue(yn);          // add y variable to storing array
+  xSlow8.addValue(xn);          // add x variable to storing array
+  xySlow8.addValue(xn * yn); // same for x*y
+  x2Slow8.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow8.getAverage();
+  slopeSlow8 = (xySlow8.getAverage() - (xvalSlow * ySlow8.getAverage())) / (x2Slow8.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[9]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow9.addValue(yn);          // add y variable to storing array
+  xSlow9.addValue(xn);          // add x variable to storing array
+  xySlow9.addValue(xn * yn); // same for x*y
+  x2Slow9.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow9.getAverage();
+  slopeSlow9 = (xySlow9.getAverage() - (xvalSlow * ySlow9.getAverage())) / (x2Slow9.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[10]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow10.addValue(yn);          // add y variable to storing array
+  xSlow10.addValue(xn);          // add x variable to storing array
+  xySlow10.addValue(xn * yn); // same for x*y
+  x2Slow10.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow10.getAverage();
+  slopeSlow10 = (xySlow10.getAverage() - (xvalSlow * ySlow10.getAverage())) / (x2Slow10.getAverage() - (xvalSlow * xvalSlow));
+
+  yn = touchRead(mod+sensor[11]) ;  // individual sensor lecture (y variable)
+  xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
+  ySlow11.addValue(yn);          // add y variable to storing array
+  xSlow11.addValue(xn);          // add x variable to storing array
+  xySlow11.addValue(xn * yn); // same for x*y
+  x2Slow11.addValue(xn * xn); // same for x*x
+  xvalSlow = xSlow11.getAverage();
+  slopeSlow11 = (xySlow11.getAverage() - (xvalSlow * ySlow11.getAverage())) / (x2Slow11.getAverage() - (xvalSlow * xvalSlow));
+
+
 }
 
 float fmap(float x, float in_min, float in_max, float out_min, float out_max)
