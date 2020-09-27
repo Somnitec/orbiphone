@@ -16,8 +16,8 @@ void debugUpdate() {
     Serial.print( bufferFast4.getMin());
     Serial.print("\tslowMax4:");
     Serial.print( bufferSlow4.getMax());
-    Serial.print("\tamp4:");
-    Serial.print( ampl[4] * 6000);
+    Serial.print("\tampl4:");
+    Serial.print( ampl[4]);
     Serial.print("\tStDevFast4:");
     Serial.print(bufferFast4.getStandardDeviation());
     Serial.print("\tStDevSlow4:");

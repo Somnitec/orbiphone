@@ -4,13 +4,13 @@
 
 //sound settings
 #define oscMaxAmplitude 0.5//some lower value to avoid the oscilators to distort
-#define glide 10    //glide time for frequency change
+#define glide 20    //glide time for frequency change (is affected by audioUpdateTime)
 
 //calibration settings
 #define defaultSensorMaxRange 200 //before touching, what is assumed is the touch range
 #define autocalibTime 8000//ms of stableness before an autocalibration happens
 #define lowerThreshold -.1//value to have a safe margin, should be a small negative float
-#define standardDevRange 250// the max value of the rate of change measurement
+#define standardDevRange 100// the max value of the rate of change measurement
 
 #define datapointsFast 10//how many measurements for the fast moving average
 #define datapointsSlow 25//how many measurements for the slow moving average
@@ -19,9 +19,9 @@
 
 //scheduler settings
 #define sensorReadFastUpdateTime 3//ms
-#define sensorReadSlowUpdateTime 50//ms
+#define sensorReadSlowUpdateTime 10//ms
 #define knobsUpdateTime 30//ms
-#define audioUpdateTime 3//ms
+#define audioUpdateTime 1//ms
 #define serialPrintUpdateTime 20//ms
 #define midiUpdateTime 10//ms
 #define ledUpdateTime 1000/100 //Hz

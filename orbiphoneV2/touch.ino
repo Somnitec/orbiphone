@@ -104,18 +104,7 @@ void doSensorReadFast() {
 //    ampl[11] = fmap(bufferFast11.getAverage(), bufferSlow11.getMin(), bufferSlow11.getMax() + 1, lowerThreshold, 1.);
 //  }
 
-  amplChange[0] = bufferFast0.getStandardDeviation();
-  amplChange[1] = bufferFast1.getStandardDeviation();
-  amplChange[2] = bufferFast2.getStandardDeviation();
-  amplChange[3] = bufferFast3.getStandardDeviation();
-  amplChange[4] = bufferFast4.getStandardDeviation();
-  amplChange[5] = bufferFast5.getStandardDeviation();
-  amplChange[6] = bufferFast6.getStandardDeviation();
-  amplChange[7] = bufferFast7.getStandardDeviation();
-  amplChange[8] = bufferFast8.getStandardDeviation();
-  amplChange[9] = bufferFast9.getStandardDeviation();
-  amplChange[10] = bufferFast10.getStandardDeviation();
-  amplChange[11] = bufferFast11.getStandardDeviation();
+
 }
 
 void doSensorReadSlow(int mod) {
@@ -144,6 +133,19 @@ void doSensorReadSlow(int mod) {
   bufferSlow9.addValue( touchRead(sensor[9]) + mod);
   bufferSlow10.addValue( touchRead(sensor[10]) + mod);
   bufferSlow11.addValue( touchRead(sensor[11]) + mod);
+
+    amplChange[0] = bufferSlow0.getStandardDeviation();
+  amplChange[1] = bufferSlow1.getStandardDeviation();
+  amplChange[2] = bufferSlow2.getStandardDeviation();
+  amplChange[3] = bufferSlow3.getStandardDeviation();
+  amplChange[4] = bufferSlow4.getStandardDeviation();
+  amplChange[5] = bufferSlow5.getStandardDeviation();
+  amplChange[6] = bufferSlow6.getStandardDeviation();
+  amplChange[7] = bufferSlow7.getStandardDeviation();
+  amplChange[8] = bufferSlow8.getStandardDeviation();
+  amplChange[9] = bufferSlow9.getStandardDeviation();
+  amplChange[10] = bufferSlow10.getStandardDeviation();
+  amplChange[11] = bufferSlow11.getStandardDeviation();
 
 }
 

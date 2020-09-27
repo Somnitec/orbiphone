@@ -10,7 +10,7 @@ void ledUpdate() {
 
   for (int i = 0; i < TONESAMOUNT; i++) {
     //leds[i] = CHSV( (millis() / colorCycleTime) % 255, 130 * mappedTotalAverage, min(255  * ampl[i], 255));
-    leds[i] = CHSV( (millis() / colorCycleTime) % 255, fmap(amplChange[i],0,standardDevRange,0,255), min(255  * ampl[i], 255));
+    leds[i] = CHSV( (millis() / colorCycleTime) % 255, fmap(amplChange[i],0,standardDevRange,0,255), min(255  * ampl[i]*2, 255));
   }
   FastLED.show();
 
