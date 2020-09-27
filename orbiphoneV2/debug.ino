@@ -1,17 +1,27 @@
 void debugUpdate() {
-  if (true) {//just showing sensor 0
-    Serial.print("\tsraw0:");
-    Serial.print( touchRead(sensor[0]));
-    Serial.print("\tfast0:");
-    Serial.print(bufferFast0.getAverage());
-    Serial.print("\tslow0:");
-    Serial.print( bufferSlow0.getAverage());
-    Serial.print("\tamp0:");
-    Serial.print( ampl[0] * 6000);
-    Serial.print("\tStDevFast0:");
-    Serial.print(bufferFast0.getStandardDeviation());
-        Serial.print("\tStDevSlow0:");
-    Serial.print(bufferSlow0.getStandardDeviation());
+
+  if (Serial.available()) {
+    int serialInput = Serial.read();
+    if (serialInput == '1')baseLineCalibration();
+  }
+
+  if (1) {//just showing sensor 4
+    Serial.print("\tsraw4:");
+    Serial.print( touchRead(sensor[4]));
+    Serial.print("\tfast4:");
+    Serial.print(bufferFast4.getAverage());
+    Serial.print("\tslow4:");
+    Serial.print( bufferSlow4.getAverage());
+    Serial.print("\tslowMin4:");
+    Serial.print( bufferFast4.getMin());
+    Serial.print("\tslowMax4:");
+    Serial.print( bufferSlow4.getMax());
+    Serial.print("\tamp4:");
+    Serial.print( ampl[4] * 6000);
+    Serial.print("\tStDevFast4:");
+    Serial.print(bufferFast4.getStandardDeviation());
+    Serial.print("\tStDevSlow4:");
+    Serial.print(bufferSlow4.getStandardDeviation());
   }
   if (false) {//showing all avg
     Serial.print("\tfast0:"); Serial.print(bufferFast0.getAverage());
@@ -25,7 +35,7 @@ void debugUpdate() {
     Serial.print("\tfast8:"); Serial.print(bufferFast8.getAverage());
     Serial.print("\tfast9:"); Serial.print(bufferFast9.getAverage());
     Serial.print("\tfast10:"); Serial.print(bufferFast10.getAverage());
-    Serial.print("\tfast11:"); Serial.print(bufferFast11.getAverage());
+    //Serial.print("\tfast11:"); Serial.print(bufferFast11.getAverage());
 
   }
   if (false) {//showing all ampl
@@ -40,7 +50,7 @@ void debugUpdate() {
     Serial.print("\tampl8:"); Serial.print(ampl[8]);
     Serial.print("\tampl9:"); Serial.print(ampl[9]);
     Serial.print("\tampl10:"); Serial.print(ampl[10]);
-    Serial.print("\tampl11:"); Serial.print(ampl[11]);
+    //Serial.print("\tampl11:"); Serial.print(ampl[11]);
 
   }
   Serial.println();

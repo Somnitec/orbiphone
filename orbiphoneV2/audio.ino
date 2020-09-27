@@ -7,7 +7,7 @@ int toneSet[][11] = {
 };
 
 void startAudio() {
-  AudioMemory(15);
+  AudioMemory(100);
   dac1.analogReference(EXTERNAL);
   //setting all the oscillators off
   mixer1.gain(0, 0);
@@ -49,6 +49,12 @@ void startAudio() {
   osc8.begin(noteVol, 220, WAVEFORM_SQUARE);
   osc9.begin(noteVol, 220, WAVEFORM_SQUARE);
   osc10.begin(noteVol, 220, WAVEFORM_SQUARE);
+
+  amp1.gain(0);
+  amp1sub.gain(0);
+
+  setFrequencies();
+  setAmplitudes();
 }
 
 void audioUpdate() {
@@ -57,26 +63,31 @@ void audioUpdate() {
   setFrequencies();
   setAmplitudes();
 
+
 }
 
 void setFrequencies() {
   for (int i = 0; i < TONESAMOUNT; i++) {
     //freq[i] = (freq[i] * glide + toneSet[(abs(encoder.read()) / 4) % toneSets][i] * 2) / (1 + glide);
-    freq[i] = (freq[i] * glide + toneSet[0][i] * 2) / (1 + glide);
+    int targetFreq = (freq[i] * glide + toneSet[abs(encoderState)%toneSets][i] * 2) / (1 + glide);
+    if (freq[i] == targetFreq)freqStable = true;
+    freq[i] = targetFreq;
   }
 
-  osc0.frequency(freq[0]);
-  osc1.frequency(freq[1]);
-  osc2.frequency(freq[2]);
-  osc3.frequency(freq[3]);
-  osc4.frequency(freq[4]);
-  osc5.frequency(freq[5]);
-  osc6.frequency(freq[6]);
-  osc7.frequency(freq[7]);
-  osc8.frequency(freq[8]);
-  osc9.frequency(freq[9]);
-  osc10.frequency(freq[10]);
-
+  //if (!freqStable) {
+    osc0.frequency(freq[0]);
+    osc1.frequency(freq[1]);
+    osc2.frequency(freq[2]);
+    osc3.frequency(freq[3]);
+    osc4.frequency(freq[4]);
+    osc5.frequency(freq[5]);
+    osc6.frequency(freq[6]);
+    osc7.frequency(freq[7]);
+    osc8.frequency(freq[8]);
+    osc9.frequency(freq[9]);
+    osc10.frequency(freq[10]);
+  //}
+  
   filter0.frequency(freq[0]);
   filter1.frequency(freq[1]);
   filter2.frequency(freq[2]);
@@ -104,28 +115,84 @@ void setFrequencies() {
 
 void setAmplitudes() {
 
-  mixer1.gain(0, oscMaxAmplitude * ampl[0]);
-  mixer1.gain(1, oscMaxAmplitude * ampl[1]);
-  mixer1.gain(2, oscMaxAmplitude * ampl[2]);
-  mixer1.gain(3, oscMaxAmplitude * ampl[3]);
-  mixer2.gain(0, oscMaxAmplitude * ampl[4]);
-  mixer2.gain(1, oscMaxAmplitude * ampl[5]);
-  mixer2.gain(2, oscMaxAmplitude * ampl[6]);
-  mixer2.gain(3, oscMaxAmplitude * ampl[7]);
-  mixer3.gain(0, oscMaxAmplitude * ampl[8]);
-  mixer3.gain(1, oscMaxAmplitude * ampl[9]);
-  mixer3.gain(2, oscMaxAmplitude * ampl[10]);
+  mixer1.gain(0, oscMaxAmplitude * max(0, ampl[0]));
+  mixer1.gain(1, oscMaxAmplitude * max(0, ampl[1]));
+  mixer1.gain(2, oscMaxAmplitude * max(0, ampl[2]));
+  mixer1.gain(3, oscMaxAmplitude * max(0, ampl[3]));
+  mixer2.gain(0, oscMaxAmplitude * max(0, ampl[4]));
+  mixer2.gain(1, oscMaxAmplitude * max(0, ampl[5]));
+  mixer2.gain(2, oscMaxAmplitude * max(0, ampl[6]));
+  mixer2.gain(3, oscMaxAmplitude * max(0, ampl[7]));
+  mixer3.gain(0, oscMaxAmplitude * max(0, ampl[8]));
+  mixer3.gain(1, oscMaxAmplitude * max(0, ampl[9]));
+  mixer3.gain(2, oscMaxAmplitude * max(0, ampl[10]));
 
-  mixer1sub.gain(0, oscMaxAmplitude * ampl[0]);
-  mixer1sub.gain(1, oscMaxAmplitude * ampl[1]);
-  mixer1sub.gain(2, oscMaxAmplitude * ampl[2]);
-  mixer1sub.gain(3, oscMaxAmplitude * ampl[3]);
-  mixer2sub.gain(0, oscMaxAmplitude * ampl[4]);
-  mixer2sub.gain(1, oscMaxAmplitude * ampl[5]);
-  mixer2sub.gain(2, oscMaxAmplitude * ampl[6]);
-  mixer2sub.gain(3, oscMaxAmplitude * ampl[7]);
-  mixer3sub.gain(0, oscMaxAmplitude * ampl[8]);
-  mixer3sub.gain(1, oscMaxAmplitude * ampl[9]);
-  mixer3sub.gain(2, oscMaxAmplitude * ampl[10]);
+  mixer1sub.gain(0, oscMaxAmplitude * max(0, ampl[0]));
+  mixer1sub.gain(1, oscMaxAmplitude * max(0, ampl[1]));
+  mixer1sub.gain(2, oscMaxAmplitude * max(0, ampl[2]));
+  mixer1sub.gain(3, oscMaxAmplitude * max(0, ampl[3]));
+  mixer2sub.gain(0, oscMaxAmplitude * max(0, ampl[4]));
+  mixer2sub.gain(1, oscMaxAmplitude * max(0, ampl[5]));
+  mixer2sub.gain(2, oscMaxAmplitude * max(0, ampl[6]));
+  mixer2sub.gain(3, oscMaxAmplitude * max(0, ampl[7]));
+  mixer3sub.gain(0, oscMaxAmplitude * max(0, ampl[8]));
+  mixer3sub.gain(1, oscMaxAmplitude * max(0, ampl[9]));
+  mixer3sub.gain(2, oscMaxAmplitude * max(0, ampl[10]));
 
+}
+
+void setTimbre() {
+  if (encClicks % 4 == 0 ) {
+    float noteVol = 0.4;
+    osc0.begin(noteVol, 220, WAVEFORM_SINE);
+    osc1.begin(noteVol, 220, WAVEFORM_SINE);
+    osc2.begin(noteVol, 220, WAVEFORM_SINE);
+    osc3.begin(noteVol, 220, WAVEFORM_SINE);
+    osc4.begin(noteVol, 220, WAVEFORM_SINE);
+    osc5.begin(noteVol, 220, WAVEFORM_SINE);
+    osc6.begin(noteVol, 220, WAVEFORM_SINE);
+    osc7.begin(noteVol, 220, WAVEFORM_SINE);
+    osc8.begin(noteVol, 220, WAVEFORM_SINE);
+    osc9.begin(noteVol, 220, WAVEFORM_SINE);
+    osc10.begin(noteVol, 220, WAVEFORM_SINE);
+  } else if (encClicks % 4 == 1 ) {
+    float noteVol = 0.3;
+    osc0.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc1.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc2.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc3.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc4.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc5.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc6.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc7.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc8.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc9.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+    osc10.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+  } else if (encClicks % 4 == 2 ) {
+    float noteVol = 0.2;
+    osc0.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc1.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc2.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc3.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc4.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc5.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc6.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc7.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc8.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc9.begin(noteVol, 220, WAVEFORM_SQUARE);
+    osc10.begin(noteVol, 220, WAVEFORM_SQUARE);
+  } else if (encClicks % 4 == 3 ) {
+    float noteVol = 0.2;
+    osc0.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc1.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc2.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc3.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc4.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc5.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc6.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc7.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc8.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc9.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+    osc10.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
+  }
 }

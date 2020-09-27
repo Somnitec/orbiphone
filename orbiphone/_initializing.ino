@@ -1,7 +1,6 @@
 #include <Audio.h>
 #include <FastLED.h>
 #include <Bounce2.h>
-
 #include "RunningAverage.h"
 #include <Encoder.h>
 

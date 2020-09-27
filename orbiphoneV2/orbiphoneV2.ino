@@ -9,17 +9,17 @@
 //calibration settings
 #define defaultSensorMaxRange 200 //before touching, what is assumed is the touch range
 #define autocalibTime 8000//ms of stableness before an autocalibration happens
-#define lowerThreshold -.05//value to have a safe margin, should be a small negative float
+#define lowerThreshold -.1//value to have a safe margin, should be a small negative float
 #define standardDevRange 250// the max value of the rate of change measurement
 
 #define datapointsFast 10//how many measurements for the fast moving average
-#define datapointsSlow 50//how many measurements for the slow moving average
+#define datapointsSlow 25//how many measurements for the slow moving average
 
 #define buttonDebounceTime       5//ms
 
 //scheduler settings
 #define sensorReadFastUpdateTime 3//ms
-#define sensorReadSlowUpdateTime 30//ms
+#define sensorReadSlowUpdateTime 50//ms
 #define knobsUpdateTime 30//ms
 #define audioUpdateTime 3//ms
 #define serialPrintUpdateTime 20//ms
@@ -27,6 +27,12 @@
 #define ledUpdateTime 1000/100 //Hz
 
 ////
+
+//went into touch.c and changed the following values:
+//#define CURRENT   15 //(default 2) 0 to 15 - current to use, value is 2*(current+1)
+//#define NSCAN     15//(default 9) number of times to scan, 0 to 31, value is nscan+1
+//#define PRESCALE  5 //(default 2) prescaler, 0 to 7 - value is 2^(prescaler+1)
+
 #include <FastLED.h>
 #include <Bounce2.h>
 #include <Metro.h>
@@ -165,7 +171,8 @@ CRGB leds[TONESAMOUNT];
 
 const int encPins[] = {12, 11, 24};
 const int volumePin = 34;
-
+Bounce encButton = Bounce();
+Encoder encoder(encPins[1], encPins[0]);
 
 Metro sensorReadFast = Metro(sensorReadFastUpdateTime);
 Metro sensorReadSlow = Metro(sensorReadSlowUpdateTime);
@@ -201,11 +208,14 @@ RunningAverage bufferFast11(datapointsFast);
 RunningAverage bufferSlow11(datapointsSlow);
 
 int encClicks = 0;
+int encoderState=0;
+bool freqStable = false;
 
 void setup() {
   initializingStuff();
 }
 
+bool firstTime = true;
 void loop() {
   if (sensorReadFast.check() == 1) {
     doSensorReadFast();
@@ -227,5 +237,10 @@ void loop() {
   }
   if (ledLoop.check() == 1) {
     ledUpdate();
+  }
+
+  if (firstTime && millis() > 1000) {
+    baseLineCalibration();
+    firstTime = false;
   }
 }
