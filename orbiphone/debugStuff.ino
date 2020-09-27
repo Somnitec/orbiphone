@@ -12,6 +12,28 @@ void debugUpdate() {
 
   Serial.println();
   Serial.println();
+     Serial.print("\tscaled0:");
+    Serial.print( ampl[0]);
+    Serial.print("\tscaled1:");
+    Serial.print( ampl[1]);
+    Serial.print("\tscaled2:");
+    Serial.print( ampl[2]);
+    Serial.print("\tscaled3:");
+    Serial.print( ampl[3]);
+    Serial.print("\tscaled4:");
+    Serial.print( ampl[4]);
+    Serial.print("\tscaled5:");
+    Serial.print( ampl[5]);
+    Serial.print("\tscaled6:");
+    Serial.print( ampl[6]);
+    Serial.print("\tscaled7:");
+    Serial.print( ampl[7]);
+    Serial.print("\tscaled8:");
+    Serial.print( ampl[8]);
+    Serial.print("\tscaled9:");
+    Serial.print( ampl[9]);
+    Serial.print("\tscaled10:");
+    Serial.print( ampl[10]);
   //button status
 
   //    Serial.print("totalAverage:");
@@ -56,30 +78,30 @@ void debugUpdate() {
   //    }
 
   //for doing an individual reading
-  int i = 10;
-  Serial.print("reading");
-  Serial.print(i);
-  Serial.print(':');
-  Serial.print(readings[i][readIndex]);
-  Serial.print('\t');
-
-  Serial.print("average");
-  Serial.print(i);
-  Serial.print(':');
-  Serial.print(average[i]);
-  Serial.print('\t');
-
-  Serial.print("lowCal");
-  Serial.print(i);
-  Serial.print(':');
-  Serial.print(lowCal[i]);
-  Serial.print('\t');
-
-  Serial.print("highCal");
-  Serial.print(i);
-  Serial.print(':');
-  Serial.print(highCal[i]);
-  Serial.print('\t');
+//  int i = 10;
+//  Serial.print("reading");
+//  Serial.print(i);
+//  Serial.print(':');
+//  Serial.print(readings[i][readIndex]);
+//  Serial.print('\t');
+//
+//  Serial.print("average");
+//  Serial.print(i);
+//  Serial.print(':');
+//  Serial.print(average[i]);
+//  Serial.print('\t');
+//
+//  Serial.print("lowCal");
+//  Serial.print(i);
+//  Serial.print(':');
+//  Serial.print(lowCal[i]);
+//  Serial.print('\t');
+//
+//  Serial.print("highCal");
+//  Serial.print(i);
+//  Serial.print(':');
+//  Serial.print(highCal[i]);
+//  Serial.print('\t');
   //
   //    Serial.println();
   //    //oscillator amplitudes

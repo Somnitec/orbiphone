@@ -63,7 +63,7 @@ float sineMaxAmplitude = 1.0 / TONESAMOUNT + .41; //about one divided by the amo
 #define calibrationUpdateTime 5//in ms
 
 #define lowThreshold 15 //a value to reach before the thing gets triggered
-#define maxRange 100 //the maximum range of the sensors before they get played
+#define maxRange 200 //the maximum range of the sensors before they get played
 #define glide 10    //glide time for frequency change
 
 #define numReadings  10 // running average of the sensor values
@@ -101,6 +101,7 @@ int encClicks = 0;
 
 
 void setup() {
+  
   initializingStuff();
 }
 

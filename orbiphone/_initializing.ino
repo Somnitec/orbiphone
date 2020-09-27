@@ -440,8 +440,10 @@ void initializingStuff() {
 
 
   amp1.gain(1.0);
+  amp1sub.gain(1.0);
 
-  //delay(500);
+  delay(500);
+  audioUpdate();
   baselineCalibration();
 }
 

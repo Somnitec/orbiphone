@@ -4,7 +4,7 @@
 int sensor[12] = {0, 1, 25, 17, 16, 15, 32, 18, 33, 19, 22, 23};
 float ampl[12];
 
-#define defaultRange 100
+#define defaultRange 200
 
 #define autocalibTime 8000
 

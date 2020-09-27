@@ -18,7 +18,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast0.getAverage();
   slopeFast0 = (xyFast0.getAverage() - (xFastVal * yFast0.getAverage())) / (x2Fast0.getAverage() - (xFastVal * xFastVal));
-  ampl[0] = fmap(touchRead(sensor[0]), ySlow0.getMin(), ySlow0.getMax() + 1, 0., 1.);
+  ampl[0] = fmap(yFast0.getAverage(), ySlow0.getMin(), ySlow0.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[1]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -29,7 +29,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast1.getAverage();
   slopeFast1 = (xyFast1.getAverage() - (xFastVal * yFast1.getAverage())) / (x2Fast1.getAverage() - (xFastVal * xFastVal));
-  ampl[1] = fmap(touchRead(sensor[1]), ySlow1.getMin(), ySlow1.getMax() + 1, 0., 1.);
+  ampl[1] = fmap(yFast1.getAverage(), ySlow1.getMin(), ySlow1.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[2]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -40,7 +40,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast2.getAverage();
   slopeFast2 = (xyFast2.getAverage() - (xFastVal * yFast2.getAverage())) / (x2Fast2.getAverage() - (xFastVal * xFastVal));
-  ampl[2] = fmap(touchRead(sensor[2]), ySlow2.getMin(), ySlow2.getMax() + 1, 0., 1.);
+  ampl[2] = fmap(yFast2.getAverage(), ySlow2.getMin(), ySlow2.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[3]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -51,7 +51,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast3.getAverage();
   slopeFast3 = (xyFast3.getAverage() - (xFastVal * yFast3.getAverage())) / (x2Fast3.getAverage() - (xFastVal * xFastVal));
-  ampl[3] = fmap(touchRead(sensor[3]), ySlow3.getMin(), ySlow3.getMax() + 1, 0., 1.);
+  ampl[3] = fmap(yFast3.getAverage(), ySlow3.getMin(), ySlow3.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[4]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -62,7 +62,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast4.getAverage();
   slopeFast4 = (xyFast4.getAverage() - (xFastVal * yFast4.getAverage())) / (x2Fast4.getAverage() - (xFastVal * xFastVal));
-  ampl[4] = fmap(touchRead(sensor[4]), ySlow4.getMin(), ySlow4.getMax() + 1, 0., 1.);
+  ampl[4] = fmap(yFast4.getAverage(), ySlow4.getMin(), ySlow4.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[5]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -73,7 +73,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast5.getAverage();
   slopeFast5 = (xyFast5.getAverage() - (xFastVal * yFast5.getAverage())) / (x2Fast5.getAverage() - (xFastVal * xFastVal));
-  ampl[5] = fmap(touchRead(sensor[5]), ySlow5.getMin(), ySlow5.getMax() + 1, 0., 1.);
+  ampl[5] = fmap(yFast5.getAverage(), ySlow5.getMin(), ySlow5.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[6]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -84,7 +84,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast6.getAverage();
   slopeFast6 = (xyFast6.getAverage() - (xFastVal * yFast6.getAverage())) / (x2Fast6.getAverage() - (xFastVal * xFastVal));
-  ampl[6] = fmap(touchRead(sensor[6]), ySlow6.getMin(), ySlow6.getMax() + 1, 0., 1.);
+  ampl[6] = fmap(yFast6.getAverage(), ySlow6.getMin(), ySlow6.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[7]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -95,7 +95,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast7.getAverage();
   slopeFast7 = (xyFast7.getAverage() - (xFastVal * yFast7.getAverage())) / (x2Fast7.getAverage() - (xFastVal * xFastVal));
-  ampl[7] = fmap(touchRead(sensor[7]), ySlow7.getMin(), ySlow7.getMax() + 1, 0., 1.);
+  ampl[7] = fmap(yFast7.getAverage(), ySlow7.getMin(), ySlow7.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[8]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -106,7 +106,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast8.getAverage();
   slopeFast8 = (xyFast8.getAverage() - (xFastVal * yFast8.getAverage())) / (x2Fast8.getAverage() - (xFastVal * xFastVal));
-  ampl[8] = fmap(touchRead(sensor[8]), ySlow8.getMin(), ySlow8.getMax() + 1, 0., 1.);
+  ampl[8] = fmap(yFast8.getAverage(), ySlow8.getMin(), ySlow8.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[9]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -117,7 +117,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast9.getAverage();
   slopeFast9 = (xyFast9.getAverage() - (xFastVal * yFast9.getAverage())) / (x2Fast9.getAverage() - (xFastVal * xFastVal));
-  ampl[9] = fmap(touchRead(sensor[9]), ySlow9.getMin(), ySlow9.getMax() + 1, 0., 1.);
+  ampl[9] = fmap(yFast9.getAverage(), ySlow9.getMin(), ySlow9.getMax() + 1, 0., 1.);
 
   yn = touchRead(sensor[10]) ;  // individual sensor lecture (y variable)
   xn = millis() / 1000.; // / 1000.000; // corresponding x time variable (seconds)
@@ -128,7 +128,7 @@ void doSensorReadFast() {
   // Slope equation (simple regression):
   xFastVal = xFast10.getAverage();
   slopeFast10 = (xyFast10.getAverage() - (xFastVal * yFast10.getAverage())) / (x2Fast10.getAverage() - (xFastVal * xFastVal));
-  ampl[10] = fmap(touchRead(sensor[10]), ySlow10.getMin(), ySlow10.getMax() + 1, 0., 1.);
+  ampl[10] = fmap(yFast10.getAverage(), ySlow10.getMin(), ySlow10.getMax() + 1, 0., 1.);
 
  }
 
