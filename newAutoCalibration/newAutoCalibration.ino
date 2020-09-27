@@ -8,7 +8,7 @@ float ampl[12];
 
 #define autocalibTime 8000
 
-#define datapointsFast 20
+#define datapointsFast 10
 #define datapointsSlow 50
 
 Metro sensorReadFast = Metro(3);
