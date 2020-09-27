@@ -1,11 +1,11 @@
 #include <Metro.h>
 #include "RunningAverage.h"
 
-#define datapointsFast 20
-#define datapointsSlow 100
+#define datapointsFast 100
+#define datapointsSlow 50
 
 Metro sensorReadFast = Metro(3);
-Metro sensorReadSlow = Metro(50);
+Metro sensorReadSlow = Metro(30);
 Metro printUpdateTime = Metro(10);
 // storage of "temporal window" of 50 data points:
 
@@ -49,7 +49,7 @@ void setup() {
 void loop()
 {
   if (sensorReadFast.check() == 1) {
-    float yn = touchRead(0) * 1.000;  // individual sensor lecture (y variable)
+    float yn = touchRead(0) * 1000;  // individual sensor lecture (y variable)
     float xn = millis();// / 1000.000; // corresponding x time variable (seconds)
 
     yFast.addValue(yn);          // add y variable to storing array
@@ -61,7 +61,7 @@ void loop()
     slopeFast = (xyFast.getAverage() - (xvalFast * yFast.getAverage())) / (x2Fast.getAverage() - (xvalFast * xvalFast));
   }
   if (sensorReadSlow.check() == 1) {
-    float yn = touchRead(0) * 1.000;  // individual sensor lecture (y variable)
+    float yn = touchRead(0) * 1000.;  // individual sensor lecture (y variable)
     float xn = millis();// / 1000.000; // corresponding x time variable (seconds)
 
     ySlow.addValue(yn);          // add y variable to storing array
@@ -74,9 +74,9 @@ void loop()
   }
   if (printUpdateTime.check() == 1) {
     Serial.print("SlopeFast:");
-    Serial.print(slopeFast * 1000, 4); // shows slope value (sensor units / second)
+    Serial.print(slopeFast , 4); // shows slope value (sensor units / second)
     Serial.print("\tSlopeSlow:");
-    Serial.print(slopeSlow * 1000, 4); // shows slope value (sensor units / second)
+    Serial.print(slopeSlow , 4); // shows slope value (sensor units / second)
     Serial.print("\tRawVal:");
     Serial.println(touchRead(0)); // shows slope value (sensor units / second)
   }
