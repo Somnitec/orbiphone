@@ -1,5 +1,5 @@
 void debugUpdate() {
-  if (false) {//just showing sensor 0
+  if (true) {//just showing sensor 0
     Serial.print("\tsraw0:");
     Serial.print( touchRead(sensor[0]));
     Serial.print("\tfast0:");
@@ -8,6 +8,10 @@ void debugUpdate() {
     Serial.print( bufferSlow0.getAverage());
     Serial.print("\tamp0:");
     Serial.print( ampl[0] * 6000);
+    Serial.print("\tStDevFast0:");
+    Serial.print(bufferFast0.getStandardDeviation());
+        Serial.print("\tStDevSlow0:");
+    Serial.print(bufferSlow0.getStandardDeviation());
   }
   if (false) {//showing all avg
     Serial.print("\tfast0:"); Serial.print(bufferFast0.getAverage());
@@ -24,7 +28,7 @@ void debugUpdate() {
     Serial.print("\tfast11:"); Serial.print(bufferFast11.getAverage());
 
   }
-  if (true) {//showing all ampl
+  if (false) {//showing all ampl
     Serial.print("\tampl0:"); Serial.print(ampl[0]);
     Serial.print("\tampl1:"); Serial.print(ampl[1]);
     Serial.print("\tampl2:"); Serial.print(ampl[2]);

@@ -4,8 +4,9 @@
 #define defaultSensorMaxRange 100 //before touching, what is assumed is the touch range
 #define autocalibTime 8000//ms of stableness before an autocalibration happens
 #define lowerThreshold -.05//value to have a safe margin, should be a small negative float
+#define standardDevRange 250// the max value of the rate of change measurement
 
-#define datapointsFast 20//how many measurements for the fast moving average
+#define datapointsFast 10//how many measurements for the fast moving average
 #define datapointsSlow 50//how many measurements for the slow moving average
 
 #define sensorReadFastUpdateTime 3//ms
@@ -26,6 +27,7 @@
 
 int sensor[12] = {0, 1, 25, 17, 16, 15, 32, 18, 33, 19, 22, 23};
 float ampl[12];
+float amplChange[12];
 
 
 #define LEDPIN0          2

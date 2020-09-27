@@ -36,6 +36,18 @@ void doSensorReadFast() {
   bufferFast11.addValue(touchRead(sensor[11]));
   ampl[11] = fmap(touchRead(sensor[11]), bufferSlow11.getMin(), bufferSlow11.getMax() + 1, lowerThreshold, 1.);
 
+  amplChange[0] = bufferFast0.getStandardDeviation();
+  amplChange[1] = bufferFast1.getStandardDeviation();
+  amplChange[2] = bufferFast2.getStandardDeviation();
+  amplChange[3] = bufferFast3.getStandardDeviation();
+  amplChange[4] = bufferFast4.getStandardDeviation();
+  amplChange[5] = bufferFast5.getStandardDeviation();
+  amplChange[6] = bufferFast6.getStandardDeviation();
+  amplChange[7] = bufferFast7.getStandardDeviation();
+  amplChange[8] = bufferFast8.getStandardDeviation();
+  amplChange[9] = bufferFast9.getStandardDeviation();
+  amplChange[10] = bufferFast10.getStandardDeviation();
+  amplChange[11] = bufferFast11.getStandardDeviation();
 }
 
 void doSensorReadSlow(int mod) {
@@ -51,6 +63,8 @@ void doSensorReadSlow(int mod) {
   bufferSlow9.addValue(bufferFast9.getAverage() + mod);
   bufferSlow10.addValue(bufferFast10.getAverage() + mod);
   bufferSlow11.addValue(bufferFast11.getAverage() + mod);
+
+
 }
 
 void baseLineCalibration() {
