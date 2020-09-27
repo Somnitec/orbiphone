@@ -10,7 +10,6 @@ void knobUpdate() {
   }
 
   if (encoderState != encoder.read() / 4) {
-
     encoderState = encoder.read() / 4;
     setFrequencies();
   }
@@ -21,5 +20,5 @@ void setKnobs() {
   pinMode(encPins[2], INPUT_PULLUP);
   encButton.attach(encPins[2]);
   encButton.interval(buttonDebounceTime);
-  //encoder.write(1000);
+  encoder.write(4000);
 }
