@@ -2,7 +2,7 @@
 
 void initializingStuff() {
   Serial.begin(115200);
-setKnobs();
+  setKnobs();
   setLeds();
   startAudio();
 

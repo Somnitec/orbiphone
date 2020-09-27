@@ -1,9 +1,13 @@
-int toneSets = 4;
+int toneSets = 7;
 int toneSet[][11] = {
   {NOTE_C6, NOTE_A5, NOTE_G5, NOTE_E5, NOTE_D5, NOTE_C5, NOTE_A4, NOTE_G4, NOTE_E4, NOTE_D4, NOTE_C4}, //pentatonic C4
   {NOTE_F5, NOTE_E5, NOTE_D5, NOTE_C5, NOTE_B4, NOTE_A4, NOTE_G4, NOTE_F4, NOTE_E4, NOTE_D4, NOTE_C4}, //diatonic C4
   {NOTE_C5, NOTE_F4, NOTE_E4, NOTE_DS4, NOTE_A4, NOTE_G4, NOTE_D4, NOTE_B4, NOTE_GS4, NOTE_CS4, NOTE_AS4}, //chromatic C4
   {NOTE_C6, NOTE_AS5, NOTE_GS5, NOTE_FS5, NOTE_E5, NOTE_D5, NOTE_C4, NOTE_AS4, NOTE_GS4, NOTE_FS4, NOTE_E4}, //whole tone C4
+  {NOTE_C6, NOTE_B5, NOTE_G5,   NOTE_FS5, NOTE_E5, NOTE_E5, NOTE_DS5, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4}, //Raja
+  {NOTE_C6, NOTE_G5, NOTE_DS5, NOTE_D5, NOTE_C5, NOTE_GS4, NOTE_G4, NOTE_DS4, NOTE_F4, NOTE_C4, NOTE_G3}, //Ake Bono
+  {NOTE_C7, NOTE_A6, NOTE_G6, NOTE_E6, NOTE_D6, NOTE_C6, NOTE_A5, NOTE_G5, NOTE_E5, NOTE_D5, NOTE_C5}, //pentatonic C5
+
 };
 
 void startAudio() {
@@ -16,6 +20,12 @@ void startAudio() {
   amp1sub.gain(0);
 
   setFrequencies();
+
+    if (digitalRead(encPins[2])) {
+    delay(50);
+    pinMode(ampPin, INPUT);
+    delay(50);
+  };
 }
 
 void audioUpdate() {
@@ -122,8 +132,9 @@ void setAmplitudes() {
 
 void setTimbre() {
   AudioNoInterrupts();
-  if (encClicks % 4 == 0 ) {
-    float noteVol = .7;
+#define timbreVariations 3
+  if (encClicks % timbreVariations == 0 ) {
+    float noteVol = .3;
     osc0.begin(noteVol, 220, WAVEFORM_SINE);
     osc1.begin(noteVol, 220, WAVEFORM_SINE);
     osc2.begin(noteVol, 220, WAVEFORM_SINE);
@@ -135,8 +146,8 @@ void setTimbre() {
     osc8.begin(noteVol, 220, WAVEFORM_SINE);
     osc9.begin(noteVol, 220, WAVEFORM_SINE);
     osc10.begin(noteVol, 220, WAVEFORM_SINE);
-  } else if (encClicks % 4 == 1 ) {
-    float noteVol = .6;
+  } else if (encClicks % timbreVariations == 1 ) {
+    float noteVol = .4;
     osc0.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc1.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc2.begin(noteVol, 220, WAVEFORM_TRIANGLE);
@@ -148,21 +159,9 @@ void setTimbre() {
     osc8.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc9.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc10.begin(noteVol, 220, WAVEFORM_TRIANGLE);
-  } else if (encClicks % 4 == 2 ) {
-    float noteVol = .4;
-    osc0.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc1.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc2.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc3.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc4.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc5.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc6.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc7.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc8.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc9.begin(noteVol, 220, WAVEFORM_SQUARE);
-    osc10.begin(noteVol, 220, WAVEFORM_SQUARE);
-  } else if (encClicks % 4 == 3 ) {
-    float noteVol = .4;
+  } else if (encClicks % timbreVariations == 2 ) {
+    float noteVol = .3;
+
     osc0.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
     osc1.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
     osc2.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
@@ -174,9 +173,10 @@ void setTimbre() {
     osc8.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
     osc9.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
     osc10.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
-    AudioInterrupts();
+
   }
   setFrequencies();
+  AudioInterrupts();
 }
 
 void setFilters() {

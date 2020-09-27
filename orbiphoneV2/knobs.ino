@@ -20,5 +20,7 @@ void setKnobs() {
   pinMode(encPins[2], INPUT_PULLUP);
   encButton.attach(encPins[2]);
   encButton.interval(buttonDebounceTime);
-  encoder.write(4000);
+  encoder.write(toneSets * 100);
+
+
 }

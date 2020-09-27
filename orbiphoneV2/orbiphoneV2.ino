@@ -279,10 +279,12 @@ float freq[12];
 #define COLOR_ORDER GRB
 CRGB leds[TONESAMOUNT];
 
+#define ampPin 21
+
 const int encPins[] = {12, 11, 24};
 const int volumePin = 34;
 Bounce encButton = Bounce();
-Encoder encoder(encPins[1], encPins[0]);
+Encoder encoder(encPins[0], encPins[1]);
 
 Metro sensorReadFast = Metro(sensorReadFastUpdateTime);
 Metro sensorReadSlow = Metro(sensorReadSlowUpdateTime);
@@ -317,11 +319,14 @@ RunningAverage bufferSlow10(datapointsSlow);
 RunningAverage bufferFast11(datapointsFast);
 RunningAverage bufferSlow11(datapointsSlow);
 
-int encClicks = 2;
-int encoderState=0;
+int encClicks = 0;
+int encoderState = 0;
 bool freqStable = false;
 
 void setup() {
+  pinMode(ampPin, OUTPUT);
+  digitalWrite(ampPin, LOW); // turn on the amplifier before anything else
+
   initializingStuff();
 }
 
