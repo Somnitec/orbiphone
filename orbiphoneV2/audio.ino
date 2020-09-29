@@ -159,7 +159,7 @@ void setTimbre() {
     osc9.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc10.begin(noteVol, 220, WAVEFORM_TRIANGLE);
   } else if (encClicks % timbreVariations == 2 ) {
-    float noteVol = .3;
+    float noteVol = .25;
 
     osc0.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
     osc1.begin(noteVol, 220, WAVEFORM_SAWTOOTH);
@@ -195,18 +195,6 @@ void setFilters() {
   filterMod9.amplitude(fmap(amplChange[9], 0, standardDevRange, filterLowPos, filterHighPos), filterChangeTime);
   filterMod10.amplitude(fmap(amplChange[10], 0, standardDevRange, filterLowPos, filterHighPos), filterChangeTime);
   filterMod11.amplitude(fmap(amplChange[11], 0, standardDevRange, filterLowPos, filterHighPos), filterChangeTime);
-  /*
-    filter0.frequency(freq[0]*fmap(amplChange[0], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter1.frequency(freq[1]*fmap(amplChange[1], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter2.frequency(freq[2]*fmap(amplChange[2], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter3.frequency(freq[3]*fmap(amplChange[3], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter4.frequency(freq[4]*fmap(amplChange[4], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter5.frequency(freq[5]*fmap(amplChange[5], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter6.frequency(freq[6]*fmap(amplChange[6], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter7.frequency(freq[7]*fmap(amplChange[7], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter8.frequency(freq[8]*fmap(amplChange[8], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter9.frequency(freq[9]*fmap(amplChange[9], 0, standardDevRange, filterLowPos, filterHighPos));
-    filter10.frequency(freq[10]*fmap(amplChange[10], 0, standardDevRange, filterLowPos, filterHighPos));
-  */
+
   AudioInterrupts();
 }
