@@ -326,10 +326,16 @@ int encoderState = 0;
 bool freqStable = false;
 
 void setup() {
+  setLeds();
   pinMode(ampPin, OUTPUT);
   digitalWrite(ampPin, LOW); // turn on the amplifier before anything else
+  
+  Serial.begin(115200);
+  setKnobs();
+  
+  startAudio();
 
-  initializingStuff();
+  baseLineCalibration();
 }
 
 bool firstTime = true;
@@ -356,8 +362,17 @@ void loop() {
     ledUpdate();
   }
 
-  if (firstTime && millis() > 1000) {
+  if (firstTime && millis() > 500) {
     baseLineCalibration();
     firstTime = false;
+    fadeOut();
   }
+}
+
+
+
+float fmap(float x, float in_min, float in_max, float out_min, float out_max)
+{
+  float value =  (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+  return constrain(value, out_min, out_max);
 }

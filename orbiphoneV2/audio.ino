@@ -132,20 +132,7 @@ void setAmplitudes() {
 void setTimbre() {
   AudioNoInterrupts();
 #define timbreVariations 3
-  if (encClicks % timbreVariations == 0 ) {
-    float noteVol = .3;
-    osc0.begin(noteVol, 220, WAVEFORM_SINE);
-    osc1.begin(noteVol, 220, WAVEFORM_SINE);
-    osc2.begin(noteVol, 220, WAVEFORM_SINE);
-    osc3.begin(noteVol, 220, WAVEFORM_SINE);
-    osc4.begin(noteVol, 220, WAVEFORM_SINE);
-    osc5.begin(noteVol, 220, WAVEFORM_SINE);
-    osc6.begin(noteVol, 220, WAVEFORM_SINE);
-    osc7.begin(noteVol, 220, WAVEFORM_SINE);
-    osc8.begin(noteVol, 220, WAVEFORM_SINE);
-    osc9.begin(noteVol, 220, WAVEFORM_SINE);
-    osc10.begin(noteVol, 220, WAVEFORM_SINE);
-  } else if (encClicks % timbreVariations == 1 ) {
+  if (encClicks % timbreVariations == 1 ) {
     float noteVol = .4;
     osc0.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc1.begin(noteVol, 220, WAVEFORM_TRIANGLE);
@@ -158,6 +145,19 @@ void setTimbre() {
     osc8.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc9.begin(noteVol, 220, WAVEFORM_TRIANGLE);
     osc10.begin(noteVol, 220, WAVEFORM_TRIANGLE);
+  } else  if (encClicks % timbreVariations == 0 ) {
+    float noteVol = .3;
+    osc0.begin(noteVol, 220, WAVEFORM_SINE);
+    osc1.begin(noteVol, 220, WAVEFORM_SINE);
+    osc2.begin(noteVol, 220, WAVEFORM_SINE);
+    osc3.begin(noteVol, 220, WAVEFORM_SINE);
+    osc4.begin(noteVol, 220, WAVEFORM_SINE);
+    osc5.begin(noteVol, 220, WAVEFORM_SINE);
+    osc6.begin(noteVol, 220, WAVEFORM_SINE);
+    osc7.begin(noteVol, 220, WAVEFORM_SINE);
+    osc8.begin(noteVol, 220, WAVEFORM_SINE);
+    osc9.begin(noteVol, 220, WAVEFORM_SINE);
+    osc10.begin(noteVol, 220, WAVEFORM_SINE);
   } else if (encClicks % timbreVariations == 2 ) {
     float noteVol = .25;
 

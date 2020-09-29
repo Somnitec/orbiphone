@@ -158,13 +158,14 @@ void baseLineCalibration() {
     }
   }
 
-  for (int i = 0; i < datapointsFast + datapointsSlow; i++) {
+  for (int i = 0; i < datapointsFast + datapointsSlow; i++) {//fill buffers
     doSensorReadFast();
     doSensorReadSlow(defaultSensorMaxRange);
 
     //delay(10);
   }
   //Serial.println("recalibrated");
+
 }
 
 void resetRunningAverages() {
