@@ -9,7 +9,7 @@
 //calibration settings
 #define defaultSensorMaxRange 200 //before touching, what is assumed is the touch range
 #define autocalibTime 8000//ms of stableness before an autocalibration happens
-#define lowerThreshold -.15//value to have a safe margin, should be a small negative float
+#define lowerThreshold -.2//value to have a safe margin, should be a small negative float
 #define standardDevRange 100// the max value of the rate of change measurement
 
 #define topAdjust 0.5// a modifier to remove sensitivity on top of the range, to make it a bit less hard to trigger some pads fully
