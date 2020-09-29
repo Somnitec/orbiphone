@@ -1,13 +1,12 @@
-int toneSets = 7;
+int toneSets = 4;
 int toneSet[][11] = {
   {NOTE_C6, NOTE_A5, NOTE_G5, NOTE_E5, NOTE_D5, NOTE_C5, NOTE_A4, NOTE_G4, NOTE_E4, NOTE_D4, NOTE_C4}, //pentatonic C4
   {NOTE_F5, NOTE_E5, NOTE_D5, NOTE_C5, NOTE_B4, NOTE_A4, NOTE_G4, NOTE_F4, NOTE_E4, NOTE_D4, NOTE_C4}, //diatonic C4
-  {NOTE_C5, NOTE_F4, NOTE_E4, NOTE_DS4, NOTE_A4, NOTE_G4, NOTE_D4, NOTE_B4, NOTE_GS4, NOTE_CS4, NOTE_AS4}, //chromatic C4
-  {NOTE_C6, NOTE_AS5, NOTE_GS5, NOTE_FS5, NOTE_E5, NOTE_D5, NOTE_C4, NOTE_AS4, NOTE_GS4, NOTE_FS4, NOTE_E4}, //whole tone C4
-  {NOTE_C6, NOTE_B5, NOTE_G5,   NOTE_FS5, NOTE_E5, NOTE_E5, NOTE_DS5, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4}, //Raja
-  {NOTE_C6, NOTE_G5, NOTE_DS5, NOTE_D5, NOTE_C5, NOTE_GS4, NOTE_G4, NOTE_DS4, NOTE_F4, NOTE_C4, NOTE_G3}, //Ake Bono
+  //{NOTE_C5, NOTE_F4, NOTE_E4, NOTE_DS4, NOTE_A4, NOTE_G4, NOTE_D4, NOTE_B4, NOTE_GS4, NOTE_CS4, NOTE_AS4}, //chromatic C4
+  //{NOTE_C6, NOTE_AS5, NOTE_GS5, NOTE_FS5, NOTE_E5, NOTE_D5, NOTE_C4, NOTE_AS4, NOTE_GS4, NOTE_FS4, NOTE_E4}, //whole tone C4
+  //{NOTE_C6, NOTE_B5, NOTE_G5,   NOTE_FS5, NOTE_E5, NOTE_E5, NOTE_DS5, NOTE_C5, NOTE_B4, NOTE_G4, NOTE_E4}, //Raja
   {NOTE_C7, NOTE_A6, NOTE_G6, NOTE_E6, NOTE_D6, NOTE_C6, NOTE_A5, NOTE_G5, NOTE_E5, NOTE_D5, NOTE_C5}, //pentatonic C5
-
+  {NOTE_C6, NOTE_G5, NOTE_DS5, NOTE_D5, NOTE_C5, NOTE_GS4, NOTE_G4, NOTE_DS4, NOTE_F4, NOTE_C4, NOTE_G3}, //Ake Bono
 };
 
 void startAudio() {
@@ -21,7 +20,7 @@ void startAudio() {
 
   setFrequencies();
 
-    if (digitalRead(encPins[2])) {
+  if (digitalRead(encPins[2])) {
     delay(50);
     pinMode(ampPin, INPUT);
     delay(50);
