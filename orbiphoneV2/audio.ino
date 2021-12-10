@@ -20,7 +20,7 @@ void startAudio() {
 
   setFrequencies();
 
-  if (digitalRead(encPins[2])) {
+  if (!digitalRead(encPins[2])) {
     delay(50);
     pinMode(ampPin, INPUT);
     delay(50);
